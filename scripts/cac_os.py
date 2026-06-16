@@ -11,6 +11,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 REGISTRY_PATH = Path(__file__).resolve().parent / "task_registry.json"
 GOLDEN_DIR = ROOT / "generated_projects" / "_golden"
 
@@ -175,6 +177,80 @@ def cmd_validate_registry(_: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_export_md(args: argparse.Namespace) -> int:
+    from runtime.report_renderer import export_run_markdown, export_skill_markdown
+
+    run_dir = Path(args.run_dir).resolve()
+    if not run_dir.is_dir():
+        print(f"Run dir not found: {run_dir}", file=sys.stderr)
+        return 1
+
+    if args.skill:
+        skill_dir = run_dir / args.skill.upper()
+        try:
+            path = export_skill_markdown(skill_dir)
+        except FileNotFoundError as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
+        print(path)
+        return 0
+
+    paths = export_run_markdown(run_dir)
+    print(f"Exported {len(paths)} markdown file(s)")
+    for path in paths:
+        try:
+            display = path.relative_to(ROOT)
+        except ValueError:
+            display = path
+        print(f"  {display}")
+    return 0
+
+
+def cmd_view_report(args: argparse.Namespace) -> int:
+    from runtime.report_cli import interactive_loop, view_skill
+
+    if args.interactive:
+        return interactive_loop(ROOT / "generated_projects")
+
+    if not args.run_id or not args.skill:
+        print("Provide --run-id and --skill, or use --interactive", file=sys.stderr)
+        return 1
+
+    run_dir = Path(args.run_dir) if args.run_dir else ROOT / "generated_projects" / args.run_id
+    return view_skill(run_dir, args.skill.upper(), write_md=args.write_md)
+
+
+def cmd_clean_runs(_: argparse.Namespace) -> int:
+    """Remove ephemeral run outputs; keep _golden/ and README.md."""
+    runs_root = ROOT / "generated_projects"
+    if not runs_root.is_dir():
+        print("No generated_projects directory.")
+        return 0
+
+    keep = {"_golden", "README.md"}
+    removed: list[str] = []
+    for child in runs_root.iterdir():
+        if child.name in keep:
+            continue
+        if child.is_dir():
+            import shutil
+
+            shutil.rmtree(child)
+            removed.append(child.name)
+        elif child.is_file() and child.name != "README.md":
+            child.unlink()
+            removed.append(child.name)
+
+    if removed:
+        print(f"Removed {len(removed)} ephemeral run(s):")
+        for name in sorted(removed):
+            print(f"  - {name}")
+    else:
+        print("No ephemeral runs to remove.")
+    print("Kept: generated_projects/_golden/")
+    return 0
+
+
 def cmd_validate_run(args: argparse.Namespace) -> int:
     run_dir = Path(args.run_dir)
     if not run_dir.is_dir():
@@ -234,6 +310,22 @@ def main() -> int:
     p_run = sub.add_parser("validate-run", help="Validate a generated_projects run folder")
     p_run.add_argument("run_dir", help="Path to run directory")
     p_run.set_defaults(func=cmd_validate_run)
+
+    p_md = sub.add_parser("export-md", help="Export human-readable Markdown reports from a run")
+    p_md.add_argument("run_dir", help="Path to run directory under generated_projects/")
+    p_md.add_argument("--skill", help="Export only one skill, e.g. B1")
+    p_md.set_defaults(func=cmd_export_md)
+
+    p_view = sub.add_parser("view", help="View skill output as Markdown in the terminal")
+    p_view.add_argument("--run-id", help="Run directory name, e.g. master-mapping")
+    p_view.add_argument("--run-dir", help="Full path to run directory (overrides --run-id)")
+    p_view.add_argument("--skill", help="Skill ID, e.g. B1")
+    p_view.add_argument("--write-md", action="store_true", help="Also write output.md beside JSON")
+    p_view.add_argument("--interactive", action="store_true", help="Launch interactive report browser")
+    p_view.set_defaults(func=cmd_view_report)
+
+    p_clean = sub.add_parser("clean-runs", help="Delete ephemeral generated_projects runs (keep _golden)")
+    p_clean.set_defaults(func=cmd_clean_runs)
 
     args = parser.parse_args()
     return args.func(args)

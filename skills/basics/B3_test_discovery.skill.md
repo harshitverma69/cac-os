@@ -25,6 +25,7 @@ None
 - Apply deterministic rules from `core/execution_rules.md`
 - Write structured JSON to `generated_projects/{run_id}/B3/output.json`
 - Validate output against Output Contract
+- Run `make skill-done RUN_ID={run_id} SKILL=B3` to open the report UI
 
 ### Output Contract (STRICT JSON)
 ```json

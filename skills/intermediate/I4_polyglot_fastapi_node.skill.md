@@ -25,6 +25,7 @@ Build FastAPI /convert service and Node.js CLI client with hardcoded rates, test
 - Apply deterministic rules from `core/execution_rules.md`
 - Write structured JSON to `generated_projects/{run_id}/I4/output.json`
 - Validate output against Output Contract
+- Run `make skill-done RUN_ID={run_id} SKILL=I4` to open the report UI
 
 ### Output Contract (STRICT JSON)
 ```json

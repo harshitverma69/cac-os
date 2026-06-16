@@ -27,6 +27,7 @@ Analyze repo for modernization opportunities, prioritize, implement highest-valu
 - Apply deterministic rules from `core/execution_rules.md`
 - Write structured JSON to `generated_projects/{run_id}/A4/output.json`
 - Validate output against Output Contract
+- Run `make skill-done RUN_ID={run_id} SKILL=A4` to open the report UI
 
 ### Output Contract (STRICT JSON)
 ```json

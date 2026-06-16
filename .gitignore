@@ -5,7 +5,8 @@ __pycache__/
 *.py[cod]
 .DS_Store
 
-# Ephemeral skill runs (golden examples are kept)
-generated_projects/run-*/
-generated_projects/final_test/
-generated_projects/final_test_2/
+# Ephemeral skill runs — golden examples are committed under _golden/
+generated_projects/*
+!generated_projects/_golden/
+!generated_projects/_golden/**
+!generated_projects/README.md

@@ -26,6 +26,7 @@ Trace one endpoint, event, or cron job end-to-end from entry point to final DB/A
 - Apply deterministic rules from `core/execution_rules.md`
 - Write structured JSON to `generated_projects/{run_id}/I2/output.json`
 - Validate output against Output Contract
+- Run `make skill-done RUN_ID={run_id} SKILL=I2` to open the report UI
 
 ### Output Contract (STRICT JSON)
 ```json

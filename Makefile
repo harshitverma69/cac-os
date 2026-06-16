@@ -1,4 +1,4 @@
-.PHONY: validate list route validate-run build-skills run-skill run-pipeline test validate-dag validate-pipeline test-determinism harden install-cursor-skills help
+.PHONY: validate list route validate-run build-skills run-skill run-pipeline test validate-dag validate-pipeline test-determinism harden install-cursor-skills export-md view-run skill-done clean-runs repolens-eval help
 
 PYTHON ?= python3
 SCRIPT := scripts/cac_os.py
@@ -12,6 +12,11 @@ help:
 	@echo "  make route INTENT=...      Compute execution plan (see task_router.md for intents)"
 	@echo "  make route TASKS=B1,B2     Compute plan for specific tasks"
 	@echo "  make validate-run RUN_DIR=generated_projects/my-run"
+	@echo "  make export-md RUN_DIR=generated_projects/my-run  Export Markdown reports"
+	@echo "  make skill-done RUN_ID=my-run SKILL=B1           Open report UI after skill"
+	@echo "  make view-run                                     Interactive report browser"
+	@echo "  make clean-runs                                   Remove ephemeral run outputs"
+	@echo "  make repolens-eval         Run all 24 agents against ../repolens (RepoLens bridge)"
 	@echo "  make build-skills          Compile agents → .skill.md + registry + HOW_TO_RUN.md"
 	@echo "  make install-cursor-skills Install all 24 skills into Cursor / menu"
 	@echo "  make run-skill SKILL=B1    Execute one skill deterministically"
@@ -51,6 +56,27 @@ ifndef RUN_DIR
 	$(error Set RUN_DIR=generated_projects/your-run)
 endif
 	$(PYTHON) $(SCRIPT) validate-run "$(RUN_DIR)"
+
+export-md:
+ifndef RUN_DIR
+	$(error Set RUN_DIR=generated_projects/your-run)
+endif
+	$(PYTHON) $(SCRIPT) export-md "$(RUN_DIR)"
+
+view-run:
+	$(PYTHON) -m runtime.report_cli interactive
+
+skill-done:
+ifndef RUN_ID
+	$(error Set RUN_ID=your-run and SKILL=B1)
+endif
+ifndef SKILL
+	$(error Set RUN_ID=your-run and SKILL=B1)
+endif
+	$(PYTHON) -m runtime.skill_finish --run-id "$(RUN_ID)" --skill "$(SKILL)"
+
+clean-runs:
+	$(PYTHON) $(SCRIPT) clean-runs
 
 skills: build-skills
 
@@ -98,3 +124,8 @@ harden:
 
 install-cursor-skills:
 	$(PYTHON) tools/install_cursor_skills.py --clean
+
+REPOLENS_REPO ?= ../repolens
+repolens-eval:
+	PYTHONPATH=$(REPOLENS_REPO)/backend $(PYTHON) tools/repolens_eval_runner.py \
+		--repo $(REPOLENS_REPO) --run-id repolens-eval

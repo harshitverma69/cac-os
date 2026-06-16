@@ -60,17 +60,26 @@ Execute **CAC-OS skill {task_id}** deterministically. Follow the Markdown specs 
 3. Eval blueprint: `{blueprint}`
 4. Full guide: `docs/HOW_TO_RUN.md`
 
-## Output (strict JSON)
+## Output (strict JSON + Markdown report)
 
-Write to: `generated_projects/{{run_id}}/{task_id}/output.json`
+Write JSON to: `generated_projects/{{run_id}}/{task_id}/output.json`
+
+## After completing (REQUIRED — opens report UI automatically)
+
+Run this in the terminal as your **last step** (exports Markdown, shows output, opens report):
+
+```bash
+cd cac-os && make skill-done RUN_ID={{run_id}} SKILL={task_id}
+```
+
+Replace `{{run_id}}` with your run folder name (e.g. repo slug like `master-mapping`).
 
 Golden reference: `generated_projects/_golden/{task_id}/{meta.get('output_file', 'output.json')}`
 
-## Validate
+## Validate (optional)
 
 ```bash
 make validate-run RUN_DIR=generated_projects/{{run_id}}
-python -m runtime.validate_pipeline --run-id {{run_id}}
 ```
 """
 

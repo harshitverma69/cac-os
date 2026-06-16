@@ -25,6 +25,7 @@ Create two parallel worktrees, make independent changes, reconcile cleanly with 
 - Apply deterministic rules from `core/execution_rules.md`
 - Write structured JSON to `generated_projects/{run_id}/A2/output.json`
 - Validate output against Output Contract
+- Run `make skill-done RUN_ID={run_id} SKILL=A2` to open the report UI
 
 ### Output Contract (STRICT JSON)
 ```json

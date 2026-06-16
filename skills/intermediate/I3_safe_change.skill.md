@@ -26,6 +26,7 @@ Make a small focused change in an unfamiliar module with minimal diff, test upda
 - Apply deterministic rules from `core/execution_rules.md`
 - Write structured JSON to `generated_projects/{run_id}/I3/output.json`
 - Validate output against Output Contract
+- Run `make skill-done RUN_ID={run_id} SKILL=I3` to open the report UI
 
 ### Output Contract (STRICT JSON)
 ```json

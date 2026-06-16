@@ -25,6 +25,7 @@ Build ER diagram for all tables and entities from repo source only; cite source 
 - Apply deterministic rules from `core/execution_rules.md`
 - Write structured JSON to `generated_projects/{run_id}/I1/output.json`
 - Validate output against Output Contract
+- Run `make skill-done RUN_ID={run_id} SKILL=I1` to open the report UI
 
 ### Output Contract (STRICT JSON)
 ```json
