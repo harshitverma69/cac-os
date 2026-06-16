@@ -1,0 +1,38 @@
+{
+  "task_id": "B5",
+  "level": "B",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "project_path": "generated_projects/example-run/B5/tx-node",
+  "mode": "api",
+  "files_created": [
+    "src/index.js",
+    "package.json",
+    "tests/api.test.js"
+  ],
+  "endpoints_or_commands": [
+    "POST /transactions",
+    "GET /balance"
+  ],
+  "tests": {
+    "count": 3,
+    "command": "npm test",
+    "exit_code": 0
+  },
+  "readme_commands": {
+    "install": [
+      "npm install"
+    ],
+    "run": [
+      "npm start"
+    ],
+    "test": [
+      "npm test"
+    ]
+  },
+  "run_proof": {
+    "command": "npm test",
+    "exit_code": 0
+  }
+}

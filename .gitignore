@@ -1,0 +1,9 @@
+.venv/
+.pytest_cache/
+.coverage
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Ephemeral skill runs (golden examples are kept)
+generated_projects/run-*/

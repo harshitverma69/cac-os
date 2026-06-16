@@ -1,0 +1,33 @@
+{
+  "task_id": "I6",
+  "level": "I",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "reproduction_steps": [
+    "pytest tests/test_bug.py -q"
+  ],
+  "root_cause": {
+    "file_path": "app/services/transaction.py",
+    "line": 55,
+    "description": "Null amount not checked"
+  },
+  "fix": {
+    "files_changed": [
+      "app/services/transaction.py"
+    ],
+    "diff_summary": "Add null check before persist"
+  },
+  "verification": {
+    "command": "pytest tests/test_bug.py -q",
+    "exit_code": 0
+  },
+  "verification_log": {
+    "agent_suggested": [
+      "Null check"
+    ],
+    "manually_verified": [
+      "Confirmed NPE resolved"
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "eval_source": "core/eval_source.md",
+  "version": "1.0.0",
+  "tasks": {
+    "B1": {"level": "B", "folder": "basics", "slug": "repo_artifact_inventory", "output_file": "inventory_report.json", "depends_on": []},
+    "B2": {"level": "B", "folder": "basics", "slug": "api_endpoint_map", "output_file": "api_map_report.json", "depends_on": ["B1"]},
+    "B3": {"level": "B", "folder": "basics", "slug": "test_discovery", "output_file": "test_discovery_report.json", "depends_on": []},
+    "B4": {"level": "B", "folder": "basics", "slug": "fastapi_greenfield", "output_file": "greenfield_manifest.json", "depends_on": []},
+    "B5": {"level": "B", "folder": "basics", "slug": "nodejs_greenfield", "output_file": "greenfield_manifest.json", "depends_on": ["B4"]},
+    "B6": {"level": "B", "folder": "basics", "slug": "rust_greenfield", "output_file": "greenfield_manifest.json", "depends_on": []},
+    "I1": {"level": "I", "folder": "intermediate", "slug": "er_diagram", "output_file": "schema_report.json", "depends_on": ["B1"]},
+    "I2": {"level": "I", "folder": "intermediate", "slug": "flow_trace", "output_file": "flow_trace_report.json", "depends_on": ["B2"]},
+    "I3": {"level": "I", "folder": "intermediate", "slug": "safe_change", "output_file": "change_report.json", "depends_on": ["B3"]},
+    "I4": {"level": "I", "folder": "intermediate", "slug": "polyglot_fastapi_node", "output_file": "polyglot_manifest.json", "depends_on": ["B4", "B5"]},
+    "I5": {"level": "I", "folder": "intermediate", "slug": "dockerize", "output_file": "docker_manifest.json", "depends_on": []},
+    "I6": {"level": "I", "folder": "intermediate", "slug": "bug_diagnosis", "output_file": "bug_fix_report.json", "depends_on": ["I2"]},
+    "A1": {"level": "A", "folder": "advanced", "slug": "multi_worktree_plan", "output_file": "worktree_plan.json", "depends_on": []},
+    "A2": {"level": "A", "folder": "advanced", "slug": "parallel_worktrees_execute", "output_file": "worktree_execution_report.json", "depends_on": ["A1"]},
+    "A3": {"level": "A", "folder": "advanced", "slug": "polyglot_fraud_system", "output_file": "fraud_system_manifest.json", "depends_on": ["B4", "B5", "B6", "I4"]},
+    "A4": {"level": "A", "folder": "advanced", "slug": "modernization_executable", "output_file": "modernization_report.json", "depends_on": ["B1", "B3"]},
+    "A5": {"level": "A", "folder": "advanced", "slug": "adversarial_code_review", "output_file": "code_review_report.json", "depends_on": []},
+    "A6": {"level": "A", "folder": "advanced", "slug": "performance_improvement", "output_file": "performance_report.json", "depends_on": []},
+    "D1": {"level": "D", "folder": "infra_devops", "slug": "terraform_plan", "output_file": "terraform_manifest.json", "depends_on": []},
+    "D2": {"level": "D", "folder": "infra_devops", "slug": "docker_compose_stack", "output_file": "compose_manifest.json", "depends_on": ["I5"]},
+    "D3": {"level": "D", "folder": "infra_devops", "slug": "ci_pipeline", "output_file": "ci_manifest.json", "depends_on": ["B3", "I5"]},
+    "D4": {"level": "D", "folder": "infra_devops", "slug": "kubernetes_manifests", "output_file": "k8s_manifest.json", "depends_on": ["I5"]},
+    "D5": {"level": "D", "folder": "infra_devops", "slug": "reproducible_dev_env", "output_file": "bootstrap_manifest.json", "depends_on": ["B3"]},
+    "D6": {"level": "D", "folder": "infra_devops", "slug": "observability_bolt_on", "output_file": "observability_manifest.json", "depends_on": ["I5"]}
+  }
+}

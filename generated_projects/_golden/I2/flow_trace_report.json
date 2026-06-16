@@ -1,0 +1,22 @@
+{
+  "task_id": "I2",
+  "level": "I",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "entry_point_id": "POST:/transactions",
+  "entry_type": "endpoint",
+  "steps": [
+    {
+      "file_path": "app/controllers/transaction.py",
+      "function_name": "create",
+      "line": 24
+    }
+  ],
+  "external_dependencies": [],
+  "side_effects": [
+    "db_write:transactions"
+  ],
+  "sequence_diagram_mermaid": "sequenceDiagram\n  Client->>Controller: POST /transactions",
+  "uncertainties": []
+}

@@ -1,0 +1,43 @@
+{
+  "task_id": "B1",
+  "level": "B",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "files_scanned": 142,
+  "modules": [
+    {
+      "name": "app",
+      "path": "app/"
+    }
+  ],
+  "artifacts": {
+    "classes": [],
+    "interfaces": [],
+    "services": [
+      {
+        "name": "OrderService",
+        "file_path": "app/services/order.py"
+      }
+    ],
+    "controllers": [
+      {
+        "name": "OrderController",
+        "file_path": "app/controllers/order.py"
+      }
+    ],
+    "repositories": [],
+    "models": [],
+    "jobs": [],
+    "consumers": [],
+    "configurations": [],
+    "utilities": []
+  },
+  "dependency_graph_summary": {
+    "nodes": [
+      "app"
+    ],
+    "edges": []
+  },
+  "limitations": []
+}

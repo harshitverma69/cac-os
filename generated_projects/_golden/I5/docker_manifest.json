@@ -1,0 +1,34 @@
+{
+  "task_id": "I5",
+  "level": "I",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "dockerfile_path": "Dockerfile",
+  "build_proof": {
+    "command": "docker build -t tx-service .",
+    "exit_code": 0
+  },
+  "run_proof": {
+    "command": "docker run -d -p 8080:8080 tx-service",
+    "exit_code": 0
+  },
+  "health_check": {
+    "command": "curl -sf http://localhost:8080/health",
+    "response_status": 200,
+    "response_body_sample": {
+      "status": "ok"
+    }
+  },
+  "readme_commands": {
+    "build": [
+      "docker build -t tx-service ."
+    ],
+    "run": [
+      "docker run -p 8080:8080 tx-service"
+    ],
+    "curl_proof": [
+      "curl http://localhost:8080/health"
+    ]
+  }
+}

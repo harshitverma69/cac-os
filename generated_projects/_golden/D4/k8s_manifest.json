@@ -1,0 +1,34 @@
+{
+  "task_id": "D4",
+  "level": "D",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "manifests": [
+    "k8s/deployment.yaml",
+    "k8s/service.yaml",
+    "k8s/configmap.yaml"
+  ],
+  "dry_run_proof": {
+    "command": "kubectl apply --dry-run=client -f k8s/",
+    "exit_code": 0
+  },
+  "apply_proof": {
+    "command": "kubectl apply -f k8s/",
+    "exit_code": 0
+  },
+  "curl_proof": {
+    "command": "kubectl port-forward svc/tx-service 8080:80 & curl -sf localhost:8080/health",
+    "response_status": 200
+  },
+  "readme": {
+    "up": [
+      "kind create cluster",
+      "kubectl apply -f k8s/"
+    ],
+    "down": [
+      "kubectl delete -f k8s/",
+      "kind delete cluster"
+    ]
+  }
+}

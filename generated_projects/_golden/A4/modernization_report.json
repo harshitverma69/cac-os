@@ -1,0 +1,39 @@
+{
+  "task_id": "A4",
+  "level": "A",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "findings": [
+    {
+      "id": "F1",
+      "description": "Outdated pytest pin",
+      "evidence": [
+        "requirements-dev.txt"
+      ],
+      "priority": 1
+    }
+  ],
+  "prioritized_plan": [
+    {
+      "action": "Upgrade pytest",
+      "priority": 1
+    }
+  ],
+  "first_step": {
+    "action": "Upgrade pytest to 8.x",
+    "files_changed": [
+      "requirements-dev.txt"
+    ],
+    "evidence": [
+      "requirements-dev.txt:3"
+    ]
+  },
+  "verification": {
+    "command": "pytest -q",
+    "exit_code": 0
+  },
+  "rollback_notes": [
+    "git revert HEAD"
+  ]
+}

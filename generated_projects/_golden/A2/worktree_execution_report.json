@@ -1,0 +1,37 @@
+{
+  "task_id": "A2",
+  "level": "A",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "commands": [
+    "git worktree add ../repo-wt-api -b feature/api"
+  ],
+  "worktrees": [
+    {
+      "name": "wt-lane-api",
+      "branch": "feature/api"
+    },
+    {
+      "name": "wt-lane-worker",
+      "branch": "feature/worker"
+    }
+  ],
+  "lane_outputs": {
+    "lane-api": {
+      "commit": "abc1234",
+      "files": [
+        "app/controllers/transaction.py"
+      ]
+    }
+  },
+  "merge_steps": [
+    "git merge feature/api",
+    "git merge feature/worker"
+  ],
+  "test_result": {
+    "command": "pytest -q",
+    "exit_code": 0
+  },
+  "conflicts": []
+}

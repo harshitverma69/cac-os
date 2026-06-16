@@ -1,0 +1,41 @@
+{
+  "task_id": "A1",
+  "level": "A",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "decomposition": [
+    {
+      "lane_id": "lane-api",
+      "scope": "API endpoints"
+    },
+    {
+      "lane_id": "lane-worker",
+      "scope": "Background worker"
+    }
+  ],
+  "worktrees": [
+    {
+      "lane_id": "lane-api",
+      "name": "wt-lane-api-feature",
+      "path": "../repo-wt-api"
+    }
+  ],
+  "agent_prompts": {
+    "lane-api": "Implement POST /transactions only",
+    "lane-worker": "Implement queue consumer only"
+  },
+  "shared_constraints": [
+    "Do not modify shared models without merge review"
+  ],
+  "merge_order": [
+    "lane-api",
+    "lane-worker"
+  ],
+  "conflict_plan": [
+    "models/ may conflict \u2014 merge lane-api first"
+  ],
+  "verification_plan": [
+    "pytest -q after merge"
+  ]
+}

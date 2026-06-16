@@ -1,0 +1,155 @@
+{
+  "run_id": "example-run-00000000-0000-0000-0000-000000000001",
+  "eval_source": "core/eval_source.md",
+  "repository_path": "/path/to/target-repo",
+  "started_at": "2026-06-16T12:00:00Z",
+  "completed_at": "2026-06-16T12:00:00Z",
+  "status": "partial",
+  "note": "Golden reference \u2014 not from a live run",
+  "tasks": [
+    {
+      "task_id": "A1",
+      "status": "complete",
+      "output_path": "_golden/A1/worktree_plan.json",
+      "agent_spec": "agents/advanced/A1_multi_worktree_plan_agent.md"
+    },
+    {
+      "task_id": "A2",
+      "status": "complete",
+      "output_path": "_golden/A2/worktree_execution_report.json",
+      "agent_spec": "agents/advanced/A2_parallel_worktrees_execute_agent.md"
+    },
+    {
+      "task_id": "A3",
+      "status": "complete",
+      "output_path": "_golden/A3/fraud_system_manifest.json",
+      "agent_spec": "agents/advanced/A3_polyglot_fraud_system_agent.md"
+    },
+    {
+      "task_id": "A4",
+      "status": "complete",
+      "output_path": "_golden/A4/modernization_report.json",
+      "agent_spec": "agents/advanced/A4_modernization_executable_agent.md"
+    },
+    {
+      "task_id": "A5",
+      "status": "complete",
+      "output_path": "_golden/A5/code_review_report.json",
+      "agent_spec": "agents/advanced/A5_adversarial_code_review_agent.md"
+    },
+    {
+      "task_id": "A6",
+      "status": "complete",
+      "output_path": "_golden/A6/performance_report.json",
+      "agent_spec": "agents/advanced/A6_performance_improvement_agent.md"
+    },
+    {
+      "task_id": "B1",
+      "status": "complete",
+      "output_path": "_golden/B1/inventory_report.json",
+      "agent_spec": "agents/basics/B1_repo_artifact_inventory_agent.md"
+    },
+    {
+      "task_id": "B2",
+      "status": "complete",
+      "output_path": "_golden/B2/api_map_report.json",
+      "agent_spec": "agents/basics/B2_api_endpoint_map_agent.md"
+    },
+    {
+      "task_id": "B3",
+      "status": "complete",
+      "output_path": "_golden/B3/test_discovery_report.json",
+      "agent_spec": "agents/basics/B3_test_discovery_agent.md"
+    },
+    {
+      "task_id": "B4",
+      "status": "complete",
+      "output_path": "_golden/B4/greenfield_manifest.json",
+      "agent_spec": "agents/basics/B4_fastapi_greenfield_agent.md"
+    },
+    {
+      "task_id": "B5",
+      "status": "complete",
+      "output_path": "_golden/B5/greenfield_manifest.json",
+      "agent_spec": "agents/basics/B5_nodejs_greenfield_agent.md"
+    },
+    {
+      "task_id": "B6",
+      "status": "complete",
+      "output_path": "_golden/B6/greenfield_manifest.json",
+      "agent_spec": "agents/basics/B6_rust_greenfield_agent.md"
+    },
+    {
+      "task_id": "D1",
+      "status": "complete",
+      "output_path": "_golden/D1/terraform_manifest.json",
+      "agent_spec": "agents/infra_devops/D1_terraform_plan_agent.md"
+    },
+    {
+      "task_id": "D2",
+      "status": "complete",
+      "output_path": "_golden/D2/compose_manifest.json",
+      "agent_spec": "agents/infra_devops/D2_docker_compose_stack_agent.md"
+    },
+    {
+      "task_id": "D3",
+      "status": "complete",
+      "output_path": "_golden/D3/ci_manifest.json",
+      "agent_spec": "agents/infra_devops/D3_ci_pipeline_agent.md"
+    },
+    {
+      "task_id": "D4",
+      "status": "complete",
+      "output_path": "_golden/D4/k8s_manifest.json",
+      "agent_spec": "agents/infra_devops/D4_kubernetes_manifests_agent.md"
+    },
+    {
+      "task_id": "D5",
+      "status": "complete",
+      "output_path": "_golden/D5/bootstrap_manifest.json",
+      "agent_spec": "agents/infra_devops/D5_reproducible_dev_env_agent.md"
+    },
+    {
+      "task_id": "D6",
+      "status": "complete",
+      "output_path": "_golden/D6/observability_manifest.json",
+      "agent_spec": "agents/infra_devops/D6_observability_bolt_on_agent.md"
+    },
+    {
+      "task_id": "I1",
+      "status": "complete",
+      "output_path": "_golden/I1/schema_report.json",
+      "agent_spec": "agents/intermediate/I1_er_diagram_agent.md"
+    },
+    {
+      "task_id": "I2",
+      "status": "complete",
+      "output_path": "_golden/I2/flow_trace_report.json",
+      "agent_spec": "agents/intermediate/I2_flow_trace_agent.md"
+    },
+    {
+      "task_id": "I3",
+      "status": "complete",
+      "output_path": "_golden/I3/change_report.json",
+      "agent_spec": "agents/intermediate/I3_safe_change_agent.md"
+    },
+    {
+      "task_id": "I4",
+      "status": "complete",
+      "output_path": "_golden/I4/polyglot_manifest.json",
+      "agent_spec": "agents/intermediate/I4_polyglot_fastapi_node_agent.md"
+    },
+    {
+      "task_id": "I5",
+      "status": "complete",
+      "output_path": "_golden/I5/docker_manifest.json",
+      "agent_spec": "agents/intermediate/I5_dockerize_agent.md"
+    },
+    {
+      "task_id": "I6",
+      "status": "complete",
+      "output_path": "_golden/I6/bug_fix_report.json",
+      "agent_spec": "agents/intermediate/I6_bug_diagnosis_agent.md"
+    }
+  ]
+}

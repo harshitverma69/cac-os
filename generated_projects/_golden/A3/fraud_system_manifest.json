@@ -1,0 +1,43 @@
+{
+  "task_id": "A3",
+  "level": "A",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "fastapi": {
+    "path": "ingestion",
+    "endpoint": "POST /transactions"
+  },
+  "node_worker": {
+    "path": "worker",
+    "process": "worker.js"
+  },
+  "rust_engine": {
+    "path": "scorer",
+    "type": "cli",
+    "binary": "fraud-score"
+  },
+  "data_contract": {
+    "transaction": {
+      "id": "uuid",
+      "amount": 100
+    },
+    "risk_score": {
+      "score": 0.15,
+      "level": "low"
+    }
+  },
+  "tests": {
+    "rust_unit": {
+      "exit_code": 0
+    },
+    "integration": {
+      "exit_code": 0
+    }
+  },
+  "run_order": [
+    "cargo build",
+    "npm start worker",
+    "uvicorn ingestion:app"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "task_id": "A6",
+  "level": "A",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "baseline": {
+    "method": "hyperfine",
+    "metric": "requests_per_sec",
+    "value": 120,
+    "unit": "rps"
+  },
+  "profiling": {
+    "approach": "cProfile",
+    "bottleneck": "JSON serialization in loop",
+    "evidence": [
+      "app/handlers.py:44"
+    ]
+  },
+  "change": {
+    "files_changed": [
+      "app/handlers.py"
+    ],
+    "description": "Use orjson dumps once per response"
+  },
+  "after": {
+    "method": "hyperfine",
+    "metric": "requests_per_sec",
+    "value": 185,
+    "improvement_pct": 54.2
+  },
+  "behavior_proof": {
+    "test_command": "pytest -q",
+    "exit_code": 0
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "task_id": "B6",
+  "level": "B",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "project_path": "generated_projects/example-run/B6/log-counter",
+  "files_created": [
+    "src/main.rs",
+    "Cargo.toml",
+    "tests/integration.rs"
+  ],
+  "cli": {
+    "accepts": "file_path",
+    "counts": [
+      "INFO",
+      "WARN",
+      "ERROR"
+    ],
+    "missing_file_exit_code": 1
+  },
+  "tests": {
+    "count": 3,
+    "command": "cargo test",
+    "exit_code": 0
+  },
+  "readme_commands": {
+    "build": [
+      "cargo build"
+    ],
+    "run": [
+      "cargo run -- sample.log"
+    ],
+    "test": [
+      "cargo test"
+    ]
+  },
+  "run_proof": {
+    "command": "cargo run -- sample.log",
+    "exit_code": 0,
+    "missing_file_proof": {
+      "exit_code": 1
+    }
+  }
+}

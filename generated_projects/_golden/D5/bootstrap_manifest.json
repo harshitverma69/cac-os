@@ -1,0 +1,25 @@
+{
+  "task_id": "D5",
+  "level": "D",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "config_files": [
+    ".devcontainer/devcontainer.json"
+  ],
+  "bootstrap_command": "make bootstrap",
+  "bootstrap_proof": {
+    "command": "make bootstrap",
+    "exit_code": 0,
+    "output_hash": "def456"
+  },
+  "test_proof": {
+    "command": "pytest -q",
+    "exit_code": 0
+  },
+  "previously_implicit": [
+    "python 3.11",
+    "libpq-dev",
+    "DATABASE_URL env var"
+  ]
+}

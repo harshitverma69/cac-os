@@ -1,0 +1,21 @@
+{
+  "task_id": "A5",
+  "level": "A",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "issues": [
+    {
+      "id": "ISS-1",
+      "category": "security",
+      "severity": "blocking",
+      "file_path": "app/main.py",
+      "line": 10,
+      "description": "Missing input validation on amount",
+      "suggested_fix": "Add Pydantic constraints",
+      "verification_steps": [
+        "pytest tests/test_validation.py"
+      ]
+    }
+  ]
+}

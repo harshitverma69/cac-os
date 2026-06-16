@@ -1,0 +1,40 @@
+{
+  "task_id": "I4",
+  "level": "I",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "fastapi_service": {
+    "path": "convert-api",
+    "endpoint": "POST /convert",
+    "tests": {
+      "count": 2,
+      "exit_code": 0
+    }
+  },
+  "node_client": {
+    "path": "convert-cli",
+    "tests_or_script": {
+      "command": "node verify.js",
+      "exit_code": 0
+    }
+  },
+  "data_contract": {
+    "request": {
+      "amount": 100,
+      "from": "USD",
+      "to": "INR"
+    },
+    "response": {
+      "converted": 8300
+    }
+  },
+  "readme": {
+    "terminal_1": [
+      "uvicorn main:app --port 8000"
+    ],
+    "terminal_2": [
+      "node cli.js --amount 100"
+    ]
+  }
+}

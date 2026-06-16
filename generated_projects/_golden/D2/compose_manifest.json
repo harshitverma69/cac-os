@@ -1,0 +1,27 @@
+{
+  "task_id": "D2",
+  "level": "D",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "compose_file": "docker-compose.yml",
+  "dockerfiles": [
+    "api/Dockerfile",
+    "worker/Dockerfile"
+  ],
+  "seed_script": "scripts/seed.sql",
+  "test_run": {
+    "command": "./scripts/e2e.sh",
+    "exit_code": 0
+  },
+  "inter_service_logs_proof": [
+    "worker connected to api",
+    "api wrote to postgres"
+  ],
+  "teardown": {
+    "command": "docker compose down -v",
+    "reup_proof": {
+      "exit_code": 0
+    }
+  }
+}

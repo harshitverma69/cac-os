@@ -1,0 +1,45 @@
+{
+  "task_id": "B4",
+  "level": "B",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "project_path": "generated_projects/example-run/B4/tx-service",
+  "files_created": [
+    "main.py",
+    "requirements.txt",
+    "tests/test_api.py",
+    "README.md"
+  ],
+  "endpoints": [
+    "POST /transactions",
+    "GET /transactions",
+    "GET /balance"
+  ],
+  "tests": {
+    "count": 3,
+    "files": [
+      "tests/test_api.py"
+    ],
+    "command": "pytest -q",
+    "exit_code": 0
+  },
+  "readme_commands": {
+    "install": [
+      "pip install -r requirements.txt"
+    ],
+    "run": [
+      "uvicorn main:app"
+    ],
+    "test": [
+      "pytest -q"
+    ]
+  },
+  "run_proof": {
+    "command": "pytest -q",
+    "exit_code": 0,
+    "response_sample": {
+      "balance": 100.0
+    }
+  }
+}

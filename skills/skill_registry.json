@@ -1,0 +1,396 @@
+{
+  "generated_at": "2026-06-16T17:42:45.551335+00:00",
+  "generator": "tools/build_skill_registry.py",
+  "scan_roots": [
+    "agents"
+  ],
+  "skill_count": 24,
+  "skills": [
+    {
+      "skill_id": "A1",
+      "name": "Multi-Worktree Plan Agent",
+      "display_name": "Multi-Worktree Plan",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "input": [
+        "repository_path",
+        "task_description",
+        "lanes"
+      ],
+      "output": [
+        "worktree_plan.json"
+      ],
+      "description": "Split one feature/analysis task into parallel worktrees or agent sessions without merge chaos.",
+      "source": "agents/advanced/A1_multi_worktree_plan_agent.md"
+    },
+    {
+      "skill_id": "A2",
+      "name": "Parallel Worktrees Execute Agent",
+      "display_name": "Parallel Worktrees Execute",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "input": [
+        "repository_path",
+        "worktree_plan.json"
+      ],
+      "output": [
+        "worktree_execution_report.json"
+      ],
+      "description": "Create two parallel worktrees, make independent changes, reconcile cleanly with test proof.",
+      "source": "agents/advanced/A2_parallel_worktrees_execute_agent.md"
+    },
+    {
+      "skill_id": "A3",
+      "name": "Polyglot Fraud System Agent",
+      "display_name": "Polyglot Fraud System",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "input": [
+        "output_dir"
+      ],
+      "output": [
+        "fraud_system_manifest.json"
+      ],
+      "description": "Build mini fraud-score system: FastAPI ingestion, Node.js worker, Rust scoring engine with tests and README.",
+      "source": "agents/advanced/A3_polyglot_fraud_system_agent.md"
+    },
+    {
+      "skill_id": "A4",
+      "name": "Modernization Executable Agent",
+      "display_name": "Modernization Executable",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "input": [
+        "repository_path",
+        "inventory_report.json",
+        "test_discovery_report.json"
+      ],
+      "output": [
+        "modernization_report.json"
+      ],
+      "description": "Analyze repo for modernization opportunities, prioritize, implement highest-value lowest-risk first step.",
+      "source": "agents/advanced/A4_modernization_executable_agent.md"
+    },
+    {
+      "skill_id": "A5",
+      "name": "Adversarial Code Review Agent",
+      "display_name": "Adversarial Code Review",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "input": [
+        "diff_or_pr_ref",
+        "repository_path"
+      ],
+      "output": [
+        "code_review_report.json"
+      ],
+      "description": "Review agent-generated PR for correctness, security, test, performance, maintainability issues; propose fixes.",
+      "source": "agents/advanced/A5_adversarial_code_review_agent.md"
+    },
+    {
+      "skill_id": "A6",
+      "name": "Performance Improvement Agent",
+      "display_name": "Performance Improvement",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "input": [
+        "service_path",
+        "benchmark_target"
+      ],
+      "output": [
+        "performance_report.json"
+      ],
+      "description": "Find real performance bottleneck, make measurable minimal improvement, prove behavior unchanged.",
+      "source": "agents/advanced/A6_performance_improvement_agent.md"
+    },
+    {
+      "skill_id": "B1",
+      "name": "Repo Artifact Inventory Agent",
+      "display_name": "Repo Artifact Inventory",
+      "level": "BASIC",
+      "level_code": "B",
+      "input": [
+        "repository_path"
+      ],
+      "output": [
+        "inventory_report.json"
+      ],
+      "description": "Inspect an unfamiliar repository and produce a deterministic inventory of classes, interfaces, services, controllers, models, repositories, jobs, consumers, configs, and utilities.",
+      "source": "agents/basics/B1_repo_artifact_inventory_agent.md"
+    },
+    {
+      "skill_id": "B2",
+      "name": "API Endpoint Map Agent",
+      "display_name": "API Endpoint Map",
+      "level": "BASIC",
+      "level_code": "B",
+      "input": [
+        "repository_path",
+        "inventory_report.json"
+      ],
+      "output": [
+        "api_map_report.json"
+      ],
+      "description": "Identify every externally exposed API route and frontend route; map each to handler and controller via static inspection.",
+      "source": "agents/basics/B2_api_endpoint_map_agent.md"
+    },
+    {
+      "skill_id": "B3",
+      "name": "Test Discovery Agent",
+      "display_name": "Test Discovery",
+      "level": "BASIC",
+      "level_code": "B",
+      "input": [
+        "repository_path",
+        "module_path"
+      ],
+      "output": [
+        "test_discovery_report.json"
+      ],
+      "description": "Find test framework, config file, relevant test files, and exact commands to run tests for a module.",
+      "source": "agents/basics/B3_test_discovery_agent.md"
+    },
+    {
+      "skill_id": "B4",
+      "name": "FastAPI Greenfield Service Agent",
+      "display_name": "FastAPI Greenfield Service",
+      "level": "BASIC",
+      "level_code": "B",
+      "input": [
+        "project_name",
+        "output_dir"
+      ],
+      "output": [
+        "greenfield_manifest.json"
+      ],
+      "description": "Build a small Python FastAPI service from scratch with POST/GET endpoints, input validation, tests, and README.",
+      "source": "agents/basics/B4_fastapi_greenfield_agent.md"
+    },
+    {
+      "skill_id": "B5",
+      "name": "Node.js Greenfield API Agent",
+      "display_name": "Node.js Greenfield API",
+      "level": "BASIC",
+      "level_code": "B",
+      "input": [
+        "project_name",
+        "output_dir",
+        "mode"
+      ],
+      "output": [
+        "greenfield_manifest.json"
+      ],
+      "description": "Build equivalent transaction/balance service as Node.js API or CLI with tests and README.",
+      "source": "agents/basics/B5_nodejs_greenfield_agent.md"
+    },
+    {
+      "skill_id": "B6",
+      "name": "Rust Greenfield CLI Agent",
+      "display_name": "Rust Greenfield CLI",
+      "level": "BASIC",
+      "level_code": "B",
+      "input": [
+        "project_name",
+        "output_dir"
+      ],
+      "output": [
+        "greenfield_manifest.json"
+      ],
+      "description": "Build Rust CLI that accepts file path, counts INFO/WARN/ERROR lines, handles missing file gracefully, with tests and README.",
+      "source": "agents/basics/B6_rust_greenfield_agent.md"
+    },
+    {
+      "skill_id": "D1",
+      "name": "Terraform Plan Agent",
+      "display_name": "Terraform Plan",
+      "level": "INFRA",
+      "level_code": "D",
+      "input": [
+        "output_dir",
+        "provider",
+        "resources"
+      ],
+      "output": [
+        "terraform_manifest.json"
+      ],
+      "description": "Write Terraform for small service that passes validate and produces clean plan against test backend.",
+      "source": "agents/infra_devops/D1_terraform_plan_agent.md"
+    },
+    {
+      "skill_id": "D2",
+      "name": "Docker Compose Stack Agent",
+      "display_name": "Docker Compose Stack",
+      "level": "INFRA",
+      "level_code": "D",
+      "input": [
+        "output_dir"
+      ],
+      "output": [
+        "compose_manifest.json"
+      ],
+      "description": "Stand up multi-service stack (API + DB + worker) with docker-compose, seed data, and E2E test script.",
+      "source": "agents/infra_devops/D2_docker_compose_stack_agent.md"
+    },
+    {
+      "skill_id": "D3",
+      "name": "CI Pipeline Agent",
+      "display_name": "CI Pipeline",
+      "level": "INFRA",
+      "level_code": "D",
+      "input": [
+        "repository_path",
+        "ci_platform"
+      ],
+      "output": [
+        "ci_manifest.json"
+      ],
+      "description": "Write CI workflow that lints, tests, builds and tags container image with green run proof.",
+      "source": "agents/infra_devops/D3_ci_pipeline_agent.md"
+    },
+    {
+      "skill_id": "D4",
+      "name": "Kubernetes Manifests Agent",
+      "display_name": "Kubernetes Manifests",
+      "level": "INFRA",
+      "level_code": "D",
+      "input": [
+        "service_path",
+        "cluster"
+      ],
+      "output": [
+        "k8s_manifest.json"
+      ],
+      "description": "Write K8s manifests, validate with dry-run/kubeval, deploy on kind/minikube with curl proof.",
+      "source": "agents/infra_devops/D4_kubernetes_manifests_agent.md"
+    },
+    {
+      "skill_id": "D5",
+      "name": "Reproducible Dev Environment Agent",
+      "display_name": "Reproducible Dev Environment",
+      "level": "INFRA",
+      "level_code": "D",
+      "input": [
+        "repository_path",
+        "bootstrap_type"
+      ],
+      "output": [
+        "bootstrap_manifest.json"
+      ],
+      "description": "Bootstrap repo from fresh clone with single command; tests pass on clean machine.",
+      "source": "agents/infra_devops/D5_reproducible_dev_env_agent.md"
+    },
+    {
+      "skill_id": "D6",
+      "name": "Observability Bolt-On Agent",
+      "display_name": "Observability Bolt-On",
+      "level": "INFRA",
+      "level_code": "D",
+      "input": [
+        "service_path"
+      ],
+      "output": [
+        "observability_manifest.json"
+      ],
+      "description": "Add structured logging and /metrics endpoint; stand up Prometheus + Grafana with working dashboard panel.",
+      "source": "agents/infra_devops/D6_observability_bolt_on_agent.md"
+    },
+    {
+      "skill_id": "I1",
+      "name": "ER Diagram Agent",
+      "display_name": "ER Diagram",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "input": [
+        "repository_path",
+        "inventory_report.json"
+      ],
+      "output": [
+        "schema_report.json"
+      ],
+      "description": "Build ER diagram for all tables and entities from repo source only; cite source file for every claim.",
+      "source": "agents/intermediate/I1_er_diagram_agent.md"
+    },
+    {
+      "skill_id": "I2",
+      "name": "Flow Trace Agent",
+      "display_name": "Flow Trace",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "input": [
+        "repository_path",
+        "entry_point_id",
+        "api_map_report.json"
+      ],
+      "output": [
+        "flow_trace_report.json"
+      ],
+      "description": "Trace one endpoint, event, or cron job end-to-end from entry point to final DB/API/queue side effect.",
+      "source": "agents/intermediate/I2_flow_trace_agent.md"
+    },
+    {
+      "skill_id": "I3",
+      "name": "Safe Change Agent",
+      "display_name": "Safe Change",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "input": [
+        "repository_path",
+        "change_spec {description, target_module}",
+        "test_discovery_report.json"
+      ],
+      "output": [
+        "change_report.json"
+      ],
+      "description": "Make a small focused change in an unfamiliar module with minimal diff, test update, and verification log.",
+      "source": "agents/intermediate/I3_safe_change_agent.md"
+    },
+    {
+      "skill_id": "I4",
+      "name": "Polyglot FastAPI Node Agent",
+      "display_name": "Polyglot FastAPI Node",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "input": [
+        "output_dir"
+      ],
+      "output": [
+        "polyglot_manifest.json"
+      ],
+      "description": "Build FastAPI /convert service and Node.js CLI client with hardcoded rates, tests, and two-terminal README.",
+      "source": "agents/intermediate/I4_polyglot_fastapi_node_agent.md"
+    },
+    {
+      "skill_id": "I5",
+      "name": "Dockerize Agent",
+      "display_name": "Dockerize",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "input": [
+        "service_path",
+        "service_port"
+      ],
+      "output": [
+        "docker_manifest.json"
+      ],
+      "description": "Containerize a service so it builds and runs cleanly in Docker with health check proof.",
+      "source": "agents/intermediate/I5_dockerize_agent.md"
+    },
+    {
+      "skill_id": "I6",
+      "name": "Bug Diagnosis Agent",
+      "display_name": "Bug Diagnosis",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "input": [
+        "repository_path",
+        "bug_context {symptoms, reproduction_hint}",
+        "flow_trace_report.json"
+      ],
+      "output": [
+        "bug_fix_report.json"
+      ],
+      "description": "Reproduce seeded bug, identify root cause with file paths, apply minimal fix, verify with command proof.",
+      "source": "agents/intermediate/I6_bug_diagnosis_agent.md"
+    }
+  ]
+}

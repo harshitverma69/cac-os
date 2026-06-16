@@ -1,0 +1,19 @@
+{
+  "task_id": "D3",
+  "level": "D",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "workflow_file": ".github/workflows/ci.yml",
+  "cache_config": {
+    "pip": "~/.cache/pip"
+  },
+  "pass_proof": {
+    "command_or_link": "act push",
+    "exit_code": 0
+  },
+  "failure_demo": {
+    "broken_commit": "bad1234",
+    "expected_fail_stage": "test"
+  }
+}

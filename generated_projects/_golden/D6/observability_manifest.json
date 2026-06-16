@@ -1,0 +1,29 @@
+{
+  "task_id": "D6",
+  "level": "D",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "code_diff_files": [
+    "app/main.py",
+    "app/metrics.py"
+  ],
+  "metrics_endpoint": "/metrics",
+  "compose_stack": {
+    "prometheus": "docker-compose.observability.yml",
+    "grafana": "docker-compose.observability.yml"
+  },
+  "dashboard_panel": {
+    "title": "Request rate",
+    "query": "rate(http_requests_total[1m])",
+    "data_proof": {
+      "series_points": 12
+    }
+  },
+  "load_script": "scripts/load.sh",
+  "readme_run_order": [
+    "docker compose up -d",
+    "bash scripts/load.sh",
+    "open grafana :3000"
+  ]
+}

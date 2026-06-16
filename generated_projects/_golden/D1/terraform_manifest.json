@@ -1,0 +1,35 @@
+{
+  "task_id": "D1",
+  "level": "D",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "tf_files": [
+    "main.tf",
+    "variables.tf"
+  ],
+  "variables": {
+    "region": "us-east-1"
+  },
+  "validate_proof": {
+    "command": "terraform validate",
+    "exit_code": 0
+  },
+  "plan_proof": {
+    "command": "terraform plan",
+    "exit_code": 0,
+    "changes_summary": {
+      "add": 3,
+      "change": 0,
+      "destroy": 0
+    }
+  },
+  "readme": {
+    "apply": [
+      "terraform apply -auto-approve"
+    ],
+    "destroy": [
+      "terraform destroy -auto-approve"
+    ]
+  }
+}

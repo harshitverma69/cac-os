@@ -1,0 +1,26 @@
+{
+  "task_id": "B3",
+  "level": "B",
+  "generated_at": "2026-06-16T12:00:00Z",
+  "scan_complete": true,
+  "warnings": [],
+  "framework": "pytest",
+  "config_files": [
+    "pytest.ini"
+  ],
+  "test_files": [
+    "tests/test_transactions.py"
+  ],
+  "commands": {
+    "unit": "pytest -q",
+    "integration": "pytest tests/integration -q",
+    "coverage": "pytest --cov=app -q"
+  },
+  "command_result": {
+    "exit_code": 0,
+    "stdout_hash": "abc123",
+    "stderr_hash": ""
+  },
+  "failures": [],
+  "interpretation": []
+}
