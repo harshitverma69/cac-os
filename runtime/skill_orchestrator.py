@@ -104,31 +104,85 @@ class SkillOrchestrator:
         return needed
 
     def detect_cycle(self, graph: dict[str, list[str]]) -> str | None:
-        state: dict[str, int] = {node: 0 for node in graph}
+        cycles = self.detect_cycles(graph)
+        return cycles[0] if cycles else None
 
-        def visit(node: str, stack: list[str]) -> str | None:
+    def detect_cycles(self, graph: dict[str, list[str]]) -> list[str]:
+        cycles: list[str] = []
+        state: dict[str, int] = {node: 0 for node in graph}
+        stack: list[str] = []
+
+        def visit(node: str) -> None:
             state[node] = 1
             stack.append(node)
-            for dep in graph.get(node, []):
+            for dep in sorted(graph.get(node, [])):
                 if dep not in state:
                     continue
                 if state[dep] == 1:
                     cycle_start = stack.index(dep)
-                    return " -> ".join(stack[cycle_start:] + [dep])
-                if state[dep] == 0:
-                    found = visit(dep, stack)
-                    if found:
-                        return found
+                    cycles.append(" -> ".join(stack[cycle_start:] + [dep]))
+                elif state[dep] == 0:
+                    visit(dep)
             stack.pop()
             state[node] = 2
-            return None
 
         for node in sorted(graph):
             if state[node] == 0:
-                found = visit(node, [])
-                if found:
-                    return found
-        return None
+                visit(node)
+
+        return cycles
+
+    def find_missing_dependencies(self, graph: dict[str, list[str]]) -> list[dict[str, str]]:
+        known = set(graph)
+        missing: list[dict[str, str]] = []
+        for skill_id in sorted(graph, key=task_sort_key):
+            for dep in graph[skill_id]:
+                if dep not in known:
+                    missing.append({"skill_id": skill_id, "missing_dependency": dep})
+        return missing
+
+    def find_orphan_skills(self, graph: dict[str, list[str]]) -> list[str]:
+        if not graph:
+            return []
+
+        reachable: set[str] = set()
+        changed = True
+        while changed:
+            changed = False
+            for skill_id in sorted(graph, key=task_sort_key):
+                if skill_id in reachable:
+                    continue
+                deps = graph[skill_id]
+                if all(dep in reachable for dep in deps):
+                    reachable.add(skill_id)
+                    changed = True
+
+        return sorted(set(graph) - reachable, key=task_sort_key)
+
+    def validate_dag(self) -> dict:
+        if not self._registry:
+            self.load_registry()
+
+        graph = self.dependency_graph()
+        cycles = self.detect_cycles(graph)
+        missing = self.find_missing_dependencies(graph)
+        orphans = self.find_orphan_skills(graph)
+
+        all_skill_ids = sorted(graph.keys(), key=task_sort_key)
+        order_a = self.topological_sort(all_skill_ids) if not cycles and not missing else []
+        order_b = self.topological_sort(all_skill_ids) if not cycles and not missing else []
+        order_stable = order_a == order_b
+
+        valid = not cycles and not missing and not orphans and order_stable
+
+        return {
+            "dag_status": "VALID" if valid else "INVALID",
+            "cycles": cycles,
+            "missing_dependencies": missing,
+            "orphan_skills": orphans,
+            "topological_order_stable": order_stable,
+            "execution_order": order_a,
+        }
 
     def topological_sort(self, requested: list[str]) -> list[str]:
         graph = self.dependency_graph()
@@ -239,3 +293,26 @@ class SkillOrchestrator:
             parallel_waves=waves,
             skills=plan_skills,
         )
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+
+    from runtime.deterministic import canonical_json_dumps
+
+    parser = argparse.ArgumentParser(description="CAC-OS skill orchestrator")
+    parser.add_argument("--validate-dag", action="store_true", help="Validate skill dependency DAG")
+    args = parser.parse_args(argv)
+
+    if not args.validate_dag:
+        print("Provide --validate-dag", file=sys.stderr)
+        return 1
+
+    orchestrator = SkillOrchestrator()
+    report = orchestrator.validate_dag()
+    print(canonical_json_dumps(report).rstrip())
+    return 0 if report["dag_status"] == "VALID" else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

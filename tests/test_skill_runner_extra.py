@@ -108,7 +108,7 @@ def test_runner_aborted_pipeline(tmp_path: Path, orchestrator: SkillOrchestrator
     summary = runner.run_plan(plan)
     assert summary["status"] == "failed"
     assert summary["completed"] == []
-    assert summary["failed"] == ["B1"]
+    assert summary["failed"] == ["B1", "B2"]
 
     log = json.loads((run_dir / "execution_log.json").read_text(encoding="utf-8"))
     assert log["aborted"] is True

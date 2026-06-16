@@ -5,6 +5,7 @@ pythonpath = ["."]
 [tool.coverage.run]
 source = ["runtime"]
 branch = true
+omit = ["runtime/__main__.py"]
 
 [tool.coverage.report]
 fail_under = 90

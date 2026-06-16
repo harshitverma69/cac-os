@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
+from runtime.deterministic import DETERMINISTIC_STAMP, canonical_json_dumps
 from runtime.skill_parser import (
     LEVEL_SKILL_DIRS,
     parse_agent_markdown,
@@ -20,6 +20,57 @@ TASK_REGISTRY_PATH = ROOT / "scripts" / "task_registry.json"
 SKILLS_ROOT = ROOT / "skills"
 CORE_REGISTRY_PATH = ROOT / "core" / "skill_registry.json"
 AGENT_DIRS = ("agents", "agents_md")
+EXPECTED_SKILL_COUNT = 24
+EXPECTED_SKILL_IDS = [f"{level}{index}" for level in "BIAD" for index in range(1, 7)]
+
+
+def validate_skill_coverage(registry: dict, skills_root: Path = SKILLS_ROOT) -> dict:
+    skills = registry.get("skills", {})
+    missing: list[str] = []
+    duplicates: list[str] = []
+    missing_files: list[str] = []
+    missing_contracts: list[str] = []
+
+    seen: set[str] = set()
+    for skill_id in sorted(skills.keys(), key=task_sort_key):
+        if skill_id in seen:
+            duplicates.append(skill_id)
+        seen.add(skill_id)
+
+    for skill_id in EXPECTED_SKILL_IDS:
+        if skill_id not in skills:
+            missing.append(skill_id)
+            continue
+
+        meta = skills[skill_id]
+        skill_path = ROOT / meta["path"]
+        if not skill_path.is_file():
+            missing_files.append(meta["path"])
+
+        if not meta.get("output_file"):
+            missing_contracts.append(skill_id)
+
+    for skill_id in sorted(set(skills.keys()) - set(EXPECTED_SKILL_IDS), key=task_sort_key):
+        if skill_id not in duplicates:
+            duplicates.append(skill_id)
+
+    total = len([skill_id for skill_id in EXPECTED_SKILL_IDS if skill_id in skills])
+    coverage_ok = (
+        total == EXPECTED_SKILL_COUNT
+        and not missing
+        and not duplicates
+        and not missing_files
+        and not missing_contracts
+    )
+
+    return {
+        "total_skills": total,
+        "missing": missing,
+        "duplicates": sorted(set(duplicates), key=task_sort_key),
+        "missing_files": missing_files,
+        "missing_output_contracts": missing_contracts,
+        "coverage_status": "100%" if coverage_ok else "INCOMPLETE",
+    }
 
 
 def load_task_registry() -> dict:
@@ -155,17 +206,18 @@ def build_skill_registry(write_skills: bool = True) -> dict:
         }
 
     return {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": DETERMINISTIC_STAMP,
         "generator": "runtime/skill_registry_builder.py",
         "eval_source": registry_data.get("eval_source"),
         "skill_count": len(skills),
         "skills": skills,
+        "coverage": validate_skill_coverage({"skills": skills}, SKILLS_ROOT),
     }
 
 
 def write_registry(registry: dict) -> Path:
     CORE_REGISTRY_PATH.parent.mkdir(parents=True, exist_ok=True)
-    CORE_REGISTRY_PATH.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8")
+    CORE_REGISTRY_PATH.write_text(canonical_json_dumps(registry), encoding="utf-8")
     return CORE_REGISTRY_PATH
 
 
@@ -244,9 +296,11 @@ def main() -> int:
     registry = build_skill_registry(write_skills=True)
     path = write_registry(registry)
     catalog_path = write_skill_catalog(registry)
+    coverage = registry["coverage"]
     print(f"OK: built {registry['skill_count']} skills")
     print(f"  - {path.relative_to(ROOT)}")
     print(f"  - {catalog_path.relative_to(ROOT)}")
+    print(f"  - coverage: {coverage['coverage_status']} ({coverage['total_skills']}/{EXPECTED_SKILL_COUNT})")
     for level_dir in sorted(LEVEL_SKILL_DIRS.values()):
         count = len(list((SKILLS_ROOT / level_dir).glob("*.skill.md")))
         if count:

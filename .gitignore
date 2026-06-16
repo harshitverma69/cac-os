@@ -7,3 +7,5 @@ __pycache__/
 
 # Ephemeral skill runs (golden examples are kept)
 generated_projects/run-*/
+generated_projects/final_test/
+generated_projects/final_test_2/

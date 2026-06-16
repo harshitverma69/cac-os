@@ -5,11 +5,15 @@ from __future__ import annotations
 import json
 import sys
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
 
+from runtime.deterministic import (
+    DETERMINISTIC_STAMP,
+    canonical_json_dumps,
+    strip_volatile_keys,
+)
 from runtime.skill_orchestrator import ExecutionPlan, SkillOrchestrator
-from runtime.skill_parser import SkillDefinition, validate_output_schema
+from runtime.skill_parser import SkillDefinition, task_sort_key, validate_output_schema
 
 ROOT = Path(__file__).resolve().parent.parent
 GOLDEN_DIR = ROOT / "generated_projects" / "_golden"
@@ -65,7 +69,7 @@ class SkillRunResult:
             "started_at": self.started_at,
             "completed_at": self.completed_at,
             "steps_executed": self.steps_executed,
-            "errors": self.errors,
+            "errors": sorted(self.errors),
         }
 
 
@@ -77,24 +81,23 @@ class SkillRunner:
         golden_dir: Path | None = None,
         registry_path: Path | None = None,
         inputs: dict | None = None,
+        continue_on_failure: bool = True,
     ):
         self.run_id = run_id
         self.run_dir = run_dir or (GENERATED_ROOT / run_id)
         self.golden_dir = golden_dir or GOLDEN_DIR
         self.registry_path = registry_path or CORE_REGISTRY_PATH
         self.inputs = {**DEFAULT_RUN_INPUTS, **(inputs or {})}
+        self.continue_on_failure = continue_on_failure
         self.registry = json.loads(self.registry_path.read_text(encoding="utf-8"))
         self.execution_log: list[dict] = []
-
-    def _now(self) -> str:
-        return datetime.now(timezone.utc).isoformat()
 
     def _artifact_input_available(self, key: str, skill: SkillDefinition) -> bool:
         if key in self.inputs:
             return True
         if not key.endswith(".json"):
             return False
-        for dep in skill.depends_on:
+        for dep in sorted(skill.depends_on, key=task_sort_key):
             dep_meta = self.registry.get("skills", {}).get(dep, {})
             if dep_meta.get("output_file") == key:
                 return (self.run_dir / dep / "output.json").is_file()
@@ -104,7 +107,7 @@ class SkillRunner:
         errors: list[str] = []
         contract = skill.input_contract or {}
 
-        for key in contract:
+        for key in sorted(contract):
             if key.endswith(".json"):
                 if not self._artifact_input_available(key, skill):
                     errors.append(f"MISSING_INPUT: {key}")
@@ -117,12 +120,12 @@ class SkillRunner:
             if not Path(str(repository_path)).exists():
                 errors.append("INPUT_CONTRACT_VIOLATION: repository_path not found")
 
-        for dep in skill.depends_on:
+        for dep in sorted(skill.depends_on, key=task_sort_key):
             dep_output = self.run_dir / dep / "output.json"
             if not dep_output.is_file():
                 errors.append(f"MISSING_DEPENDENCY_OUTPUT: {dep}")
 
-        return errors
+        return sorted(errors)
 
     def load_golden_output(self, skill_id: str) -> dict:
         meta = self.registry["skills"][skill_id]
@@ -130,6 +133,11 @@ class SkillRunner:
         if not golden_path.is_file():
             raise FileNotFoundError(f"Golden output missing: {golden_path}")
         return json.loads(golden_path.read_text(encoding="utf-8"))
+
+    def normalize_output(self, output: dict, skill_id: str) -> dict:
+        normalized = strip_volatile_keys(dict(output))
+        normalized["task_id"] = skill_id
+        return normalized
 
     def execute_steps(self, skill: SkillDefinition, skill_id: str) -> tuple[dict, list[str], list[str]]:
         steps_executed: list[str] = []
@@ -146,11 +154,8 @@ class SkillRunner:
         except FileNotFoundError as exc:
             return {}, steps_executed, [str(exc)]
 
-        steps_executed.append("stamp_run_metadata")
-        output = dict(output)
-        output["task_id"] = skill_id
-        output["run_id"] = self.run_id
-        output["generated_at"] = self._now()
+        steps_executed.append("normalize_output")
+        output = self.normalize_output(output, skill_id)
 
         steps_executed.append("validate_output_contract")
         schema_errors = validate_output_schema(output, skill.output_contract)
@@ -163,7 +168,7 @@ class SkillRunner:
         return output, steps_executed, errors
 
     def run_skill(self, skill: SkillDefinition) -> SkillRunResult:
-        started = self._now()
+        stamp = DETERMINISTIC_STAMP
         skill_id = skill.skill_id
         out_dir = self.run_dir / skill_id
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -173,14 +178,14 @@ class SkillRunner:
         status = "complete" if output and not errors else "failed"
 
         if status == "complete":
-            output_path.write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
+            output_path.write_text(canonical_json_dumps(output), encoding="utf-8")
 
         result = SkillRunResult(
             skill_id=skill_id,
             status=status,
             output_path=_display_path(output_path),
-            started_at=started,
-            completed_at=self._now(),
+            started_at=stamp,
+            completed_at=stamp,
             steps_executed=steps,
             errors=errors,
         )
@@ -201,10 +206,11 @@ class SkillRunner:
 
                 result = self.run_skill(skill)
                 results.append(result)
-                if result.status != "complete":
+                if result.status != "complete" and not self.continue_on_failure:
                     return self._finalize(plan, results, wave_index, aborted=True)
 
-        return self._finalize(plan, results, len(plan.parallel_waves) - 1, aborted=False)
+        aborted = any(result.status != "complete" for result in results)
+        return self._finalize(plan, results, len(plan.parallel_waves) - 1, aborted=aborted)
 
     def _finalize(
         self,
@@ -215,45 +221,52 @@ class SkillRunner:
     ) -> dict:
         log_path = self.run_dir / "execution_log.json"
         final_path = self.run_dir / "final_report.json"
+        stamp = DETERMINISTIC_STAMP
 
-        completed = [result.skill_id for result in results if result.status == "complete"]
-        failed = [result.skill_id for result in results if result.status != "complete"]
+        completed = sorted(
+            [result.skill_id for result in results if result.status == "complete"],
+            key=task_sort_key,
+        )
+        failed = sorted(
+            [result.skill_id for result in results if result.status != "complete"],
+            key=task_sort_key,
+        )
 
         log_doc = {
-            "run_id": self.run_id,
-            "started_at": results[0].started_at if results else self._now(),
-            "completed_at": self._now(),
-            "execution_order": plan.execution_order,
-            "parallel_waves": plan.parallel_waves,
-            "last_wave_executed": last_wave,
             "aborted": aborted,
-            "entries": [result.to_dict() for result in results],
+            "completed_at": stamp,
+            "entries": sorted([result.to_dict() for result in results], key=lambda item: task_sort_key(item["skill_id"])),
+            "execution_order": plan.execution_order,
+            "last_wave_executed": last_wave,
+            "parallel_waves": plan.parallel_waves,
+            "run_id": self.run_id,
+            "started_at": stamp,
         }
-        log_path.write_text(json.dumps(log_doc, indent=2) + "\n", encoding="utf-8")
+        log_path.write_text(canonical_json_dumps(log_doc), encoding="utf-8")
 
         final_doc = {
-            "run_id": self.run_id,
-            "status": "failed" if aborted else "complete",
-            "skills_requested": plan.requested,
-            "skills_completed": completed,
-            "skills_failed": failed,
-            "total_skills": len(plan.execution_order),
             "completed_count": len(completed),
-            "failed_count": len(failed),
             "execution_log": _display_path(log_path),
+            "failed_count": len(failed),
             "outputs": {
                 skill_id: _display_path(self.run_dir / skill_id / "output.json")
                 for skill_id in completed
             },
+            "run_id": self.run_id,
+            "skills_completed": completed,
+            "skills_failed": failed,
+            "skills_requested": plan.requested,
+            "status": "failed" if aborted else "complete",
+            "total_skills": len(plan.execution_order),
         }
-        final_path.write_text(json.dumps(final_doc, indent=2) + "\n", encoding="utf-8")
+        final_path.write_text(canonical_json_dumps(final_doc), encoding="utf-8")
 
         return {
+            "completed": completed,
             "execution_log": _display_path(log_path),
+            "failed": failed,
             "final_report": _display_path(final_path),
             "status": final_doc["status"],
-            "completed": completed,
-            "failed": failed,
         }
 
 
@@ -261,7 +274,7 @@ def main(argv: list[str] | None = None) -> int:
     import argparse
 
     parser = argparse.ArgumentParser(description="CAC-OS deterministic skill runner")
-    parser.add_argument("--run-id", default=f"run-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')}")
+    parser.add_argument("--run-id", default="pipeline-run")
     parser.add_argument("--skill", help="Single skill ID, e.g. B1")
     parser.add_argument("--domain", choices=["B", "I", "A", "D"], help="Run all skills in domain")
     parser.add_argument("--full-pipeline", action="store_true", help="Run all 24 skills in DAG order")
@@ -284,7 +297,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     if args.plan_only:
-        print(json.dumps(plan.to_dict(), indent=2))
+        print(canonical_json_dumps(plan.to_dict()).rstrip())
         return 0
 
     runner = SkillRunner(
@@ -292,7 +305,7 @@ def main(argv: list[str] | None = None) -> int:
         inputs={"repository_path": args.repository_path},
     )
     summary = runner.run_plan(plan)
-    print(json.dumps(summary, indent=2))
+    print(canonical_json_dumps(summary).rstrip())
     return 0 if summary["status"] == "complete" else 1
 
 
