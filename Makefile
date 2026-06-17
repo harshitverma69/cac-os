@@ -1,4 +1,4 @@
-.PHONY: validate list route validate-run build-skills run-skill run-pipeline test validate-dag validate-pipeline test-determinism harden install-cursor-skills export-md view-run skill-done clean-runs repolens-eval expand-agent-specs build-frontend serve-frontend help
+.PHONY: validate list route validate-run build-skills run-skill run-pipeline test validate-dag validate-pipeline test-determinism harden install-cursor-skills export-md view-run skill-done clean-runs repolens-eval expand-agent-specs build-frontend serve-frontend setup help
 
 PYTHON ?= python3
 SCRIPT := scripts/repo_analyser.py
@@ -20,6 +20,7 @@ help:
 	@echo "  make build-skills          Compile agents → .skill.md + registry + HOW_TO_RUN.md"
 	@echo "  make expand-agent-specs    Expand agent specs to full procedural detail"
 	@echo "  make install-cursor-skills Install all 24 skills into Cursor / menu"
+	@echo "  make setup                 First-time setup (build-skills + cursor + frontend + validate)"
 	@echo "  make build-frontend        Build local agent guide UI (frontend/data/skills.json)"
 	@echo "  make serve-frontend        Open local UI at http://127.0.0.1:8765 (no deploy)"
 	@echo "  make run-skill SKILL=B1    Execute one skill deterministically"
@@ -133,6 +134,13 @@ install-cursor-skills:
 
 build-frontend:
 	$(PYTHON) tools/build_frontend.py
+
+setup: build-skills install-cursor-skills build-frontend validate
+	@echo ""
+	@echo "Setup complete."
+	@echo "  1. Restart Cursor (for /repo-analyser-* slash commands)"
+	@echo "  2. Run any skill — browser + Live runs tab open automatically"
+	@echo "  3. Full guide: docs/SETUP.md"
 
 serve-frontend: build-frontend
 	$(PYTHON) tools/serve_frontend.py $(if $(PORT),--port $(PORT),) $(if $(NO_OPEN),--no-open,)

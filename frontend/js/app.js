@@ -29,6 +29,12 @@ const els = {
   liveReport: document.getElementById("live-report"),
   liveHistory: document.getElementById("live-history"),
   livePoll: document.getElementById("live-poll"),
+  agentIndex: document.getElementById("agent-index"),
+  copyAllCommands: document.getElementById("copy-all-commands"),
+  levelLegend: document.getElementById("level-legend"),
+  catalogBody: document.getElementById("agent-catalog-body"),
+  catalogCount: document.getElementById("catalog-count"),
+  agentCatalog: document.getElementById("agent-catalog"),
 };
 
 async function loadCatalog() {
@@ -56,6 +62,124 @@ function filteredSkills() {
     if (!query) return true;
     const hay = `${s.task_id} ${s.name} ${s.description} ${s.slash_command}`.toLowerCase();
     return hay.includes(query);
+  });
+}
+
+function skillsByLevel(skills) {
+  const groups = {};
+  for (const lv of catalog.levels) {
+    groups[lv.code] = skills.filter((s) => s.level_code === lv.code);
+  }
+  return groups;
+}
+
+function skillCardHtml(s) {
+  return `
+    <article class="skill-card" data-id="${s.task_id}" tabindex="0">
+      <div class="id badge badge-${s.level_code}">${s.task_id} · ${s.level}</div>
+      <h3>${s.name}</h3>
+      <p>${s.description}</p>
+      <div class="meta">
+        ${s.depends_on.length ? `Depends: ${s.depends_on.join(", ")}` : "No dependencies"}
+        · <code>${s.slash_command}</code>
+      </div>
+    </article>`;
+}
+
+function bindSkillCards(root) {
+  root.querySelectorAll(".skill-card").forEach((card) => {
+    const open = () => openDetail(card.dataset.id);
+    card.addEventListener("click", open);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open();
+      }
+    });
+  });
+}
+
+function renderLevelLegend() {
+  if (!els.levelLegend) return;
+  els.levelLegend.innerHTML = catalog.levels
+    .map((lv) => {
+      const count = catalog.skills.filter((s) => s.level_code === lv.code).length;
+      const names = catalog.skills
+        .filter((s) => s.level_code === lv.code)
+        .map((s) => s.task_id)
+        .join(", ");
+      return `
+        <div class="legend-item">
+          <span class="badge badge-${lv.code}">${lv.code} · ${lv.label}</span>
+          <span class="muted">${count} agents: ${names}</span>
+        </div>`;
+    })
+    .join("");
+}
+
+function renderAgentIndex() {
+  if (!els.agentIndex) return;
+  const groups = skillsByLevel(catalog.skills);
+  els.agentIndex.innerHTML = catalog.levels
+    .map((lv) => {
+      const items = groups[lv.code] || [];
+      return `
+        <div class="agent-index-group">
+          <div class="agent-index-heading badge badge-${lv.code}">${lv.code} · ${lv.label}</div>
+          <ul>
+            ${items
+              .map(
+                (s) => `
+              <li>
+                <button type="button" class="agent-index-btn" data-id="${s.task_id}" title="${s.slash_command}">
+                  <strong>${s.task_id}</strong>
+                  <span>${s.name}</span>
+                </button>
+              </li>`
+              )
+              .join("")}
+          </ul>
+        </div>`;
+    })
+    .join("");
+
+  els.agentIndex.querySelectorAll(".agent-index-btn").forEach((btn) => {
+    btn.addEventListener("click", () => openDetail(btn.dataset.id));
+  });
+}
+
+function renderAgentCatalog() {
+  if (!els.catalogBody) return;
+  const items = filteredSkills();
+  els.catalogBody.innerHTML = items
+    .map(
+      (s) => `
+    <tr class="catalog-row" data-id="${s.task_id}" tabindex="0">
+      <td><span class="badge badge-${s.level_code}">${s.task_id}</span></td>
+      <td><strong>${s.name}</strong><br><span class="muted catalog-desc">${s.description}</span></td>
+      <td>${s.level}</td>
+      <td><code>${s.slash_command}</code></td>
+      <td>${s.depends_on.length ? s.depends_on.join(", ") : "—"}</td>
+    </tr>`
+    )
+    .join("");
+
+  if (els.catalogCount) {
+    els.catalogCount.textContent =
+      items.length === catalog.skill_count
+        ? `${catalog.skill_count} agents`
+        : `${items.length} of ${catalog.skill_count} agents`;
+  }
+
+  els.catalogBody.querySelectorAll(".catalog-row").forEach((row) => {
+    const open = () => openDetail(row.dataset.id);
+    row.addEventListener("click", open);
+    row.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open();
+      }
+    });
   });
 }
 
@@ -100,31 +224,33 @@ function renderGrid() {
   els.statVisible.textContent = String(items.length);
   els.statTotal.textContent = String(catalog.skill_count);
 
-  els.grid.innerHTML = items
-    .map(
-      (s) => `
-    <article class="skill-card" data-id="${s.task_id}" tabindex="0">
-      <div class="id badge badge-${s.level_code}">${s.task_id} · ${s.level}</div>
-      <h3>${s.name}</h3>
-      <p>${s.description}</p>
-      <div class="meta">
-        ${s.depends_on.length ? `Depends: ${s.depends_on.join(", ")}` : "No dependencies"}
-        · <code>${s.slash_command}</code>
-      </div>
-    </article>`
-    )
+  const groups = skillsByLevel(items);
+  if (!items.length) {
+    els.grid.innerHTML = `<div class="panel muted">No agents match your search or filter.</div>`;
+    renderAgentCatalog();
+    return;
+  }
+
+  els.grid.innerHTML = catalog.levels
+    .map((lv) => {
+      const skills = groups[lv.code] || [];
+      if (!skills.length) return "";
+      const ids = skills.map((s) => s.task_id).join(", ");
+      return `
+        <section class="level-section" id="level-${lv.code}">
+          <div class="level-section-header">
+            <h2><span class="badge badge-${lv.code}">${lv.code}</span> ${lv.label}</h2>
+            <span class="muted">${skills.length} agent${skills.length === 1 ? "" : "s"}: ${ids}</span>
+          </div>
+          <div class="skill-grid">
+            ${skills.map((s) => skillCardHtml(s)).join("")}
+          </div>
+        </section>`;
+    })
     .join("");
 
-  els.grid.querySelectorAll(".skill-card").forEach((card) => {
-    const open = () => openDetail(card.dataset.id);
-    card.addEventListener("click", open);
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        open();
-      }
-    });
-  });
+  bindSkillCards(els.grid);
+  renderAgentCatalog();
 }
 
 function openDetail(taskId) {
@@ -373,8 +499,17 @@ async function init() {
     await loadCatalog();
     renderSetup();
     renderLevelFilters();
+    renderLevelLegend();
+    renderAgentIndex();
     renderGrid();
     startPolling();
+
+    if (els.copyAllCommands) {
+      els.copyAllCommands.onclick = () => {
+        const cmds = catalog.skills.map((s) => `${s.task_id} ${s.name}: ${s.slash_command}`).join("\n");
+        copyText(cmds);
+      };
+    }
 
     const params = new URLSearchParams(window.location.search);
     if (params.get("live") === "1" || params.get("run")) {

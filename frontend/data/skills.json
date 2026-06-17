@@ -22,11 +22,10 @@
   "setup": {
     "title": "First-time setup",
     "steps": [
+      "git clone https://github.com/harshitverma69/Repo-Analyser.git",
       "cd Repo-Analyser",
-      "make build-skills",
-      "make install-cursor-skills",
-      "make build-frontend",
-      "make serve-frontend"
+      "make setup",
+      "Restart Cursor \u2014 then run any /repo-analyser-* skill"
     ]
   },
   "skills": [
@@ -64,7 +63,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=B1` or open `generated_projects/<run_id>/B1/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B1` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -104,7 +103,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=B2` or open `generated_projects/<run_id>/B2/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B2` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -142,7 +141,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=B3` or open `generated_projects/<run_id>/B3/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B3` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -180,7 +179,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=B4` or open `generated_projects/<run_id>/B4/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B4` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -220,7 +219,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=B5` or open `generated_projects/<run_id>/B5/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B5` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -258,7 +257,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=B6` or open `generated_projects/<run_id>/B6/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B6` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -298,7 +297,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=I1` or open `generated_projects/<run_id>/I1/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I1` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -338,7 +337,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=I2` or open `generated_projects/<run_id>/I2/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I2` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -378,7 +377,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=I3` or open `generated_projects/<run_id>/I3/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I3` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -419,7 +418,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=I4` or open `generated_projects/<run_id>/I4/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I4` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -457,7 +456,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=I5` or open `generated_projects/<run_id>/I5/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I5` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -497,7 +496,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=I6` or open `generated_projects/<run_id>/I6/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I6` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -535,7 +534,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=A1` or open `generated_projects/<run_id>/A1/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A1` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -575,7 +574,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=A2` or open `generated_projects/<run_id>/A2/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A2` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -618,7 +617,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=A3` or open `generated_projects/<run_id>/A3/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A3` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -659,7 +658,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=A4` or open `generated_projects/<run_id>/A4/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A4` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -697,7 +696,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=A5` or open `generated_projects/<run_id>/A5/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A5` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -735,7 +734,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=A6` or open `generated_projects/<run_id>/A6/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A6` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -773,7 +772,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=D1` or open `generated_projects/<run_id>/D1/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D1` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -813,7 +812,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=D2` or open `generated_projects/<run_id>/D2/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D2` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -854,7 +853,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=D3` or open `generated_projects/<run_id>/D3/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D3` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -894,7 +893,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=D4` or open `generated_projects/<run_id>/D4/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D4` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -934,7 +933,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=D5` or open `generated_projects/<run_id>/D5/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D5` \u2014 re-opens terminal + browser report"
         }
       ]
     },
@@ -974,7 +973,7 @@
         },
         {
           "title": "Verify (optional)",
-          "body": "`make skill-done RUN_ID=<run_id> SKILL=D6` or open `generated_projects/<run_id>/D6/output.md`"
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D6` \u2014 re-opens terminal + browser report"
         }
       ]
     }

@@ -6,18 +6,29 @@
 
 ## Quick start
 
+**Full setup guide:** **[docs/SETUP.md](docs/SETUP.md)** — frontend auto-open, Cursor skills, and daily workflow.
+
 ```bash
+git clone https://github.com/harshitverma69/Repo-Analyser.git
 cd Repo-Analyser
-make build-skills           # compile skills + registry
-make install-cursor-skills  # add /repo-analyser-* to Cursor menu
-make build-frontend         # local agent guide UI
-make serve-frontend         # open http://127.0.0.1:8765
+make setup                  # one-time: skills + Cursor + frontend + validate
+```
+
+Then in Cursor: `/repo-analyser-er-diagram @your-repo` — the report opens automatically in the browser (Live runs tab) and terminal.
+
+Optional — keep the UI open before you start:
+
+```bash
+make serve-frontend         # http://127.0.0.1:8765
 make validate               # verify specs and DAG
 ```
 
-## Main guide
+## Main guides
 
-**[docs/HOW_TO_RUN.md](docs/HOW_TO_RUN.md)** — setup, commands, and every skill with role + file locations.
+| Doc | Contents |
+|-----|----------|
+| **[docs/SETUP.md](docs/SETUP.md)** | **Start here** — full setup, auto-open flow, troubleshooting |
+| **[docs/HOW_TO_RUN.md](docs/HOW_TO_RUN.md)** | All 24 skills with file paths and commands |
 
 ## Repository structure
 
@@ -50,7 +61,8 @@ Type `/` in chat → search `repo-analyser` → e.g. `/repo-analyser-repo-invent
 
 | Doc | Description |
 |-----|-------------|
-| [docs/HOW_TO_RUN.md](docs/HOW_TO_RUN.md) | **Start here** — full run guide + all skills |
+| [docs/SETUP.md](docs/SETUP.md) | **Start here** — setup, frontend auto-open, troubleshooting |
+| [docs/HOW_TO_RUN.md](docs/HOW_TO_RUN.md) | All 24 skills with commands and file paths |
 | [docs/OVERVIEW.md](docs/OVERVIEW.md) | Architecture overview |
 | [docs/STATUS.md](docs/STATUS.md) | Project status |
 | [core/capability_registry.md](core/capability_registry.md) | Task registry with dependencies |

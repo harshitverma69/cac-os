@@ -51,8 +51,7 @@ def run_steps(task_id: str) -> list[dict[str, str]]:
         {
             "title": "Verify (optional)",
             "body": (
-                f"`make skill-done RUN_ID=<run_id> SKILL={task_id}` or open "
-                f"`generated_projects/<run_id>/{task_id}/output.md`"
+                f"`make skill-done RUN_ID=<run_id> SKILL={task_id}` — re-opens terminal + browser report"
             ),
         },
     ]
@@ -103,11 +102,10 @@ def main() -> int:
         "setup": {
             "title": "First-time setup",
             "steps": [
+                "git clone https://github.com/harshitverma69/Repo-Analyser.git",
                 "cd Repo-Analyser",
-                "make build-skills",
-                "make install-cursor-skills",
-                "make build-frontend",
-                "make serve-frontend",
+                "make setup",
+                "Restart Cursor — then run any /repo-analyser-* skill",
             ],
         },
         "skills": entries,

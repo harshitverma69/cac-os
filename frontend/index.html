@@ -38,6 +38,13 @@
         <button type="button" class="btn btn-ghost" id="clear-filters">Show all 24</button>
       </section>
 
+      <section class="panel agent-index-panel">
+        <h2>All 24 agents</h2>
+        <p class="muted sidebar-hint">Click any agent to open its run guide.</p>
+        <div id="agent-index" class="agent-index"></div>
+        <button type="button" class="btn btn-ghost btn-sm" id="copy-all-commands">Copy all slash commands</button>
+      </section>
+
       <section class="panel stats">
         <div><strong id="stat-visible">0</strong> shown</div>
         <div><strong id="stat-total">24</strong> total</div>
@@ -69,15 +76,39 @@
 
       <section id="agents-panel">
       <section id="welcome" class="welcome panel">
-        <h2>How this UI works</h2>
+        <h2>All 24 Repo-Analyser agents</h2>
         <p>
-          When you finish a skill (<code>skill_finish write</code> or a Cursor slash command), the local UI
-          starts automatically and opens the report under <strong>Live runs</strong>.
-          You can also run <code>make serve-frontend</code> yourself to keep it open.
+          Run <code>make setup</code> once after cloning. When you finish a skill
+          (<code>skill_finish write</code> or a Cursor slash command), the local UI
+          starts automatically and opens the report under <strong>Live runs</strong>
+          (including Mermaid ER diagrams for I1).
+          See <code>docs/SETUP.md</code> for the full guide.
         </p>
+        <div class="level-legend" id="level-legend"></div>
       </section>
 
-      <div id="skill-grid" class="skill-grid"></div>
+      <section id="agent-catalog" class="panel catalog-panel">
+        <div class="catalog-header">
+          <h2>Complete agent catalog</h2>
+          <span class="muted" id="catalog-count">24 agents</span>
+        </div>
+        <div class="catalog-table-wrap">
+          <table id="agent-catalog-table" class="catalog-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Agent</th>
+                <th>Level</th>
+                <th>Cursor command</th>
+                <th>Depends on</th>
+              </tr>
+            </thead>
+            <tbody id="agent-catalog-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div id="skill-grid" class="skill-grid-root"></div>
       </section>
     </main>
   </div>

@@ -27,17 +27,18 @@ pip install pytest pytest-cov
 
 ## 2. First-time setup
 
+See **[docs/SETUP.md](SETUP.md)** for the full guide (frontend auto-open, troubleshooting).
+
 ```bash
+git clone https://github.com/harshitverma69/Repo-Analyser.git
 cd Repo-Analyser
-make build-skills          # compile agent specs → .skill.md + core/skill_registry.json
-make expand-agent-specs    # expand agents/ to full procedural specs (optional)
-make install-cursor-skills # install 24 skills into Cursor / menu
-make build-frontend        # build local agent guide UI
-make serve-frontend        # open http://127.0.0.1:8765 (no deploy)
-make validate              # verify specs, blueprints, golden examples, DAG
+make setup                 # build-skills + cursor skills + frontend + validate
 ```
 
-Restart Cursor after `install-cursor-skills` if `/repo-analyser-*` commands do not appear.
+Restart Cursor after setup if `/repo-analyser-*` commands do not appear.
+
+When any skill finishes, the **browser opens automatically** to the Live runs tab
+(port 8765). `make serve-frontend` is optional — use it to keep the UI open beforehand.
 
 ---
 
@@ -68,7 +69,7 @@ Restart Cursor after `install-cursor-skills` if `/repo-analyser-*` commands do n
 python3 -m runtime.skill_finish write --run-id <run_id> --skill B1 --payload-file payload.json
 ```
 
-If the terminal UI does not appear, open `generated_projects/<run_id>/B1/output.md`.
+This also **auto-opens the browser** (Live runs tab) and prints the terminal CLI report.
 
 Or if `output.json` already exists: `python3 -m runtime.skill_finish --run-id <run_id> --skill B1`
 
