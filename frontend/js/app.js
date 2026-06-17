@@ -11,6 +11,7 @@ const els = {
   search: document.getElementById("search"),
   levelFilters: document.getElementById("level-filters"),
   setupSteps: document.getElementById("setup-steps"),
+  setupNote: document.getElementById("setup-note"),
   copySetup: document.getElementById("copy-setup"),
   clearFilters: document.getElementById("clear-filters"),
   statVisible: document.getElementById("stat-visible"),
@@ -184,11 +185,12 @@ function renderAgentCatalog() {
 }
 
 function renderSetup() {
-  const steps = [
-    ...catalog.setup.steps,
-    "Skill reports auto-open in the browser when skill_finish write completes",
-  ];
+  const steps = catalog.setup?.steps || [];
   els.setupSteps.innerHTML = steps.map((step) => `<li><code>${step}</code></li>`).join("");
+  if (els.setupNote) {
+    els.setupNote.textContent = catalog.setup?.note || "";
+    els.setupNote.hidden = !catalog.setup?.note;
+  }
   els.copySetup.onclick = () => copyText(steps.join("\n"));
 }
 

@@ -11,10 +11,15 @@
 ```bash
 git clone https://github.com/harshitverma69/Repo-Analyser.git
 cd Repo-Analyser
-make setup                  # one-time: skills + Cursor + frontend + validate
+make build-skills
+make install-cursor-skills   # 24 /repo-analyser-* skills → ~/.cursor/skills/
+make build-frontend
+make validate                # optional but recommended
 ```
 
-Then in Cursor: `/repo-analyser-er-diagram @your-repo` — the report opens automatically in the browser (Live runs tab) and terminal.
+Or: `make setup` (runs build-skills, install-cursor-skills, build-frontend, and validate).
+
+**Restart Cursor completely** after install — slash commands appear under `/` → search `repo-analyser`.
 
 Optional — keep the UI open before you start:
 

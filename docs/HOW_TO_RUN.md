@@ -32,10 +32,14 @@ See **[docs/SETUP.md](SETUP.md)** for the full guide (frontend auto-open, troubl
 ```bash
 git clone https://github.com/harshitverma69/Repo-Analyser.git
 cd Repo-Analyser
-make setup                 # build-skills + cursor skills + frontend + validate
+make build-skills
+make install-cursor-skills   # 24 /repo-analyser-* skills → ~/.cursor/skills/
+make build-frontend
 ```
 
-Restart Cursor after setup if `/repo-analyser-*` commands do not appear.
+Or: `make setup` (runs all three plus `make validate`).
+
+**Restart Cursor completely** after `install-cursor-skills` so slash commands appear.
 
 When any skill finishes, the **browser opens automatically** to the Live runs tab
 (port 8765). `make serve-frontend` is optional — use it to keep the UI open beforehand.

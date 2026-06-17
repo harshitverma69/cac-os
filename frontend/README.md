@@ -8,10 +8,14 @@ See **[docs/SETUP.md](../docs/SETUP.md)** for the full setup guide (Cursor skill
 
 ```bash
 cd Repo-Analyser
-make setup              # first time only (includes build-frontend)
+make build-skills
+make install-cursor-skills   # installs 24 /repo-analyser-* skills → ~/.cursor/skills/
+make build-frontend
 ```
 
-After setup, **you do not need to start this server manually**. Every `skill_finish write` auto-starts it and opens your browser to the **Live runs** tab.
+Or one command: `make setup` (runs all three above plus `make validate`).
+
+**Restart Cursor completely** after `install-cursor-skills` — then type `/` and search `repo-analyser`.
 
 Optional — keep the UI open while you work:
 

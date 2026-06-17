@@ -104,9 +104,13 @@ def main() -> int:
             "steps": [
                 "git clone https://github.com/harshitverma69/Repo-Analyser.git",
                 "cd Repo-Analyser",
-                "make setup",
-                "Restart Cursor — then run any /repo-analyser-* skill",
+                "make build-skills",
+                "make install-cursor-skills",
+                "make build-frontend",
+                "Restart Cursor completely",
+                "In chat: / then pick a /repo-analyser-* command",
             ],
+            "note": "Shortcut: make setup runs the three make targets above plus validate. After each skill, reports auto-open in the browser (Live runs tab).",
         },
         "skills": entries,
     }

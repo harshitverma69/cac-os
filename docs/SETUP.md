@@ -32,17 +32,14 @@ From a fresh clone:
 ```bash
 git clone https://github.com/harshitverma69/Repo-Analyser.git
 cd Repo-Analyser
-make setup
+make build-skills
+make install-cursor-skills   # installs 24 /repo-analyser-* into ~/.cursor/skills/
+make build-frontend
 ```
 
-`make setup` runs:
+Or run `make setup` once (same three targets plus `make validate`).
 
-1. `make build-skills` — compiles agent specs → `skills/`, `core/skill_registry.json`, `docs/HOW_TO_RUN.md`
-2. `make install-cursor-skills` — installs all 24 `/repo-analyser-*` commands into Cursor
-3. `make build-frontend` — generates `frontend/data/skills.json` for the browser UI
-4. `make validate` — verifies specs, blueprints, golden examples, and the skill DAG
-
-**Restart Cursor** after setup so slash commands appear in chat (`/` → search `repo-analyser`).
+**Restart Cursor completely** after install so `/repo-analyser-*` slash commands appear in chat.
 
 ---
 
