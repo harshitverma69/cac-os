@@ -43,8 +43,14 @@ def write_skill_output(
     output_path.write_text(canonical_json_dumps(payload), encoding="utf-8")
     if save_md:
         export_markdown_reports(run_dir, skill_dir)
+    try:
+        from runtime.frontend_sync import publish_skill_run
+
+        publish_skill_run(run_id, skill_id, payload)
+    except Exception as exc:
+        print(f"Warning: frontend sync failed: {exc}", file=sys.stderr)
     if show_ui:
-        show_skill_report(run_dir, skill_id, save_md=False, interactive=False)
+        show_skill_report(run_dir, skill_id, save_md=False, interactive=False, sync_frontend=False)
     return output_path
 
 
@@ -54,6 +60,7 @@ def show_skill_report(
     *,
     save_md: bool = True,
     interactive: bool = False,
+    sync_frontend: bool = True,
 ) -> int:
     """Render a skill report to the terminal; refreshes markdown reports by default."""
     skill_id = skill_id.upper()
@@ -69,6 +76,13 @@ def show_skill_report(
         export_markdown_reports(run_dir, skill_dir)
 
     task_id, payload = load_skill_payload(skill_dir)
+    if sync_frontend:
+        try:
+            from runtime.frontend_sync import publish_skill_run
+
+            publish_skill_run(run_dir.name, task_id or skill_id, payload)
+        except Exception as exc:
+            print(f"Warning: frontend sync failed: {exc}", file=sys.stderr)
     print(render_terminal_ui(run_dir.name, task_id or skill_id, payload, run_dir=run_dir))
 
     if not interactive:

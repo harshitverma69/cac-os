@@ -10,3 +10,9 @@ generated_projects/*
 !generated_projects/_golden/
 !generated_projects/_golden/**
 !generated_projects/README.md
+
+# Live frontend run copies (regenerated on each skill_finish)
+frontend/data/runs/**
+frontend/data/live.json
+frontend/data/runs_index.json
+!frontend/data/runs/.gitkeep

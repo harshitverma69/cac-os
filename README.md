@@ -10,6 +10,8 @@
 cd Repo-Analyser
 make build-skills           # compile skills + registry
 make install-cursor-skills  # add /repo-analyser-* to Cursor menu
+make build-frontend         # local agent guide UI
+make serve-frontend         # open http://127.0.0.1:8765
 make validate               # verify specs and DAG
 ```
 
@@ -28,6 +30,7 @@ make validate               # verify specs and DAG
 | `eval_blueprints/` | Eval runbooks |
 | `generated_projects/_golden/` | Reference JSON outputs |
 | `tools/install_cursor_skills.py` | Cursor `/` menu installer |
+| `frontend/` | Local browser guide for all 24 agents (`make serve-frontend`) |
 
 ## Common commands
 

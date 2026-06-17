@@ -1,4 +1,4 @@
-.PHONY: validate list route validate-run build-skills run-skill run-pipeline test validate-dag validate-pipeline test-determinism harden install-cursor-skills export-md view-run skill-done clean-runs repolens-eval expand-agent-specs help
+.PHONY: validate list route validate-run build-skills run-skill run-pipeline test validate-dag validate-pipeline test-determinism harden install-cursor-skills export-md view-run skill-done clean-runs repolens-eval expand-agent-specs build-frontend serve-frontend help
 
 PYTHON ?= python3
 SCRIPT := scripts/repo_analyser.py
@@ -20,6 +20,8 @@ help:
 	@echo "  make build-skills          Compile agents → .skill.md + registry + HOW_TO_RUN.md"
 	@echo "  make expand-agent-specs    Expand agent specs to full procedural detail"
 	@echo "  make install-cursor-skills Install all 24 skills into Cursor / menu"
+	@echo "  make build-frontend        Build local agent guide UI (frontend/data/skills.json)"
+	@echo "  make serve-frontend        Open local UI at http://127.0.0.1:8765 (no deploy)"
 	@echo "  make run-skill SKILL=B1    Execute one skill deterministically"
 	@echo "  make run-pipeline          Execute all 24 skills in DAG order"
 	@echo "  make validate-dag          Validate skill dependency DAG"
@@ -128,6 +130,12 @@ harden:
 
 install-cursor-skills:
 	$(PYTHON) tools/install_cursor_skills.py --clean
+
+build-frontend:
+	$(PYTHON) tools/build_frontend.py
+
+serve-frontend: build-frontend
+	$(PYTHON) tools/serve_frontend.py $(if $(PORT),--port $(PORT),) $(if $(NO_OPEN),--no-open,)
 
 REPOLENS_REPO ?= ../repolens
 repolens-eval:

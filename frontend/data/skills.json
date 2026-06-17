@@ -1,0 +1,982 @@
+{
+  "project": "Repo-Analyser",
+  "skill_count": 24,
+  "levels": [
+    {
+      "code": "B",
+      "label": "Basic"
+    },
+    {
+      "code": "I",
+      "label": "Intermediate"
+    },
+    {
+      "code": "A",
+      "label": "Advanced"
+    },
+    {
+      "code": "D",
+      "label": "Infra / DevOps"
+    }
+  ],
+  "setup": {
+    "title": "First-time setup",
+    "steps": [
+      "cd Repo-Analyser",
+      "make build-skills",
+      "make install-cursor-skills",
+      "make build-frontend",
+      "make serve-frontend"
+    ]
+  },
+  "skills": [
+    {
+      "task_id": "B1",
+      "name": "Repo Artifact Inventory",
+      "level": "BASIC",
+      "level_code": "B",
+      "description": "Inspect an unfamiliar repository and produce a deterministic inventory of classes, interfaces, services, controllers, models, repositories, jobs, consumers, configs, and utilities.",
+      "depends_on": [],
+      "agent_spec": "agents/basics/B1_repo_artifact_inventory_agent.md",
+      "skill_spec": "skills/basics/B1_repo_artifact_inventory.skill.md",
+      "blueprint": "eval_blueprints/B/B1_blueprint.md",
+      "slash_command": "/repo-analyser-repo-inventory",
+      "output_json": "generated_projects/{run_id}/B1/output.json",
+      "golden_json": "generated_projects/_golden/B1/inventory_report.json",
+      "make_run": "make run-skill SKILL=B1 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill B1 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-repo-inventory` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill B1 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B1` or open `generated_projects/<run_id>/B1/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "name": "Api Endpoint Map",
+      "level": "BASIC",
+      "level_code": "B",
+      "description": "Identify every externally exposed API route and frontend route; map each to handler and controller via static inspection.",
+      "depends_on": [
+        "B1"
+      ],
+      "agent_spec": "agents/basics/B2_api_endpoint_map_agent.md",
+      "skill_spec": "skills/basics/B2_api_endpoint_map.skill.md",
+      "blueprint": "eval_blueprints/B/B2_blueprint.md",
+      "slash_command": "/repo-analyser-api-mapping",
+      "output_json": "generated_projects/{run_id}/B2/output.json",
+      "golden_json": "generated_projects/_golden/B2/api_map_report.json",
+      "make_run": "make run-skill SKILL=B2 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill B2 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-api-mapping` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill B2 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B2` or open `generated_projects/<run_id>/B2/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "name": "Test Discovery",
+      "level": "BASIC",
+      "level_code": "B",
+      "description": "Find test framework, config file, relevant test files, and exact commands to run tests for a module.",
+      "depends_on": [],
+      "agent_spec": "agents/basics/B3_test_discovery_agent.md",
+      "skill_spec": "skills/basics/B3_test_discovery.skill.md",
+      "blueprint": "eval_blueprints/B/B3_blueprint.md",
+      "slash_command": "/repo-analyser-test-discovery",
+      "output_json": "generated_projects/{run_id}/B3/output.json",
+      "golden_json": "generated_projects/_golden/B3/test_discovery_report.json",
+      "make_run": "make run-skill SKILL=B3 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill B3 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-test-discovery` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill B3 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B3` or open `generated_projects/<run_id>/B3/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "name": "Fastapi Greenfield",
+      "level": "BASIC",
+      "level_code": "B",
+      "description": "Build a small Python FastAPI service from scratch with POST/GET endpoints, input validation, tests, and README.",
+      "depends_on": [],
+      "agent_spec": "agents/basics/B4_fastapi_greenfield_agent.md",
+      "skill_spec": "skills/basics/B4_fastapi_greenfield.skill.md",
+      "blueprint": "eval_blueprints/B/B4_blueprint.md",
+      "slash_command": "/repo-analyser-fastapi-greenfield",
+      "output_json": "generated_projects/{run_id}/B4/output.json",
+      "golden_json": "generated_projects/_golden/B4/greenfield_manifest.json",
+      "make_run": "make run-skill SKILL=B4 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill B4 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-fastapi-greenfield` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill B4 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B4` or open `generated_projects/<run_id>/B4/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "name": "Nodejs Greenfield",
+      "level": "BASIC",
+      "level_code": "B",
+      "description": "Build equivalent transaction/balance service as Node.js API or CLI with tests and README.",
+      "depends_on": [
+        "B4"
+      ],
+      "agent_spec": "agents/basics/B5_nodejs_greenfield_agent.md",
+      "skill_spec": "skills/basics/B5_nodejs_greenfield.skill.md",
+      "blueprint": "eval_blueprints/B/B5_blueprint.md",
+      "slash_command": "/repo-analyser-node-greenfield",
+      "output_json": "generated_projects/{run_id}/B5/output.json",
+      "golden_json": "generated_projects/_golden/B5/greenfield_manifest.json",
+      "make_run": "make run-skill SKILL=B5 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill B5 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-node-greenfield` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill B5 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B5` or open `generated_projects/<run_id>/B5/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "name": "Rust Greenfield",
+      "level": "BASIC",
+      "level_code": "B",
+      "description": "Build Rust CLI that accepts file path, counts INFO/WARN/ERROR lines, handles missing file gracefully, with tests and README.",
+      "depends_on": [],
+      "agent_spec": "agents/basics/B6_rust_greenfield_agent.md",
+      "skill_spec": "skills/basics/B6_rust_greenfield.skill.md",
+      "blueprint": "eval_blueprints/B/B6_blueprint.md",
+      "slash_command": "/repo-analyser-rust-greenfield",
+      "output_json": "generated_projects/{run_id}/B6/output.json",
+      "golden_json": "generated_projects/_golden/B6/greenfield_manifest.json",
+      "make_run": "make run-skill SKILL=B6 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill B6 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-rust-greenfield` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill B6 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=B6` or open `generated_projects/<run_id>/B6/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "I1",
+      "name": "Er Diagram",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "description": "Build ER diagram for all tables and entities from repo source only; cite source file for every claim.",
+      "depends_on": [
+        "B1"
+      ],
+      "agent_spec": "agents/intermediate/I1_er_diagram_agent.md",
+      "skill_spec": "skills/intermediate/I1_er_diagram.skill.md",
+      "blueprint": "eval_blueprints/I/I1_blueprint.md",
+      "slash_command": "/repo-analyser-er-diagram",
+      "output_json": "generated_projects/{run_id}/I1/output.json",
+      "golden_json": "generated_projects/_golden/I1/schema_report.json",
+      "make_run": "make run-skill SKILL=I1 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill I1 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-er-diagram` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill I1 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I1` or open `generated_projects/<run_id>/I1/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "I2",
+      "name": "Flow Trace",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "description": "Trace one endpoint, event, or cron job end-to-end from entry point to final DB/API/queue side effect.",
+      "depends_on": [
+        "B2"
+      ],
+      "agent_spec": "agents/intermediate/I2_flow_trace_agent.md",
+      "skill_spec": "skills/intermediate/I2_flow_trace.skill.md",
+      "blueprint": "eval_blueprints/I/I2_blueprint.md",
+      "slash_command": "/repo-analyser-flow-trace",
+      "output_json": "generated_projects/{run_id}/I2/output.json",
+      "golden_json": "generated_projects/_golden/I2/flow_trace_report.json",
+      "make_run": "make run-skill SKILL=I2 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill I2 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-flow-trace` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill I2 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I2` or open `generated_projects/<run_id>/I2/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "I3",
+      "name": "Safe Change",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "description": "Make a small focused change in an unfamiliar module with minimal diff, test update, and verification log.",
+      "depends_on": [
+        "B3"
+      ],
+      "agent_spec": "agents/intermediate/I3_safe_change_agent.md",
+      "skill_spec": "skills/intermediate/I3_safe_change.skill.md",
+      "blueprint": "eval_blueprints/I/I3_blueprint.md",
+      "slash_command": "/repo-analyser-safe-change",
+      "output_json": "generated_projects/{run_id}/I3/output.json",
+      "golden_json": "generated_projects/_golden/I3/change_report.json",
+      "make_run": "make run-skill SKILL=I3 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill I3 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-safe-change` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill I3 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I3` or open `generated_projects/<run_id>/I3/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "I4",
+      "name": "Polyglot Fastapi Node",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "description": "Build FastAPI /convert service and Node.js CLI client with hardcoded rates, tests, and two-terminal README.",
+      "depends_on": [
+        "B4",
+        "B5"
+      ],
+      "agent_spec": "agents/intermediate/I4_polyglot_fastapi_node_agent.md",
+      "skill_spec": "skills/intermediate/I4_polyglot_fastapi_node.skill.md",
+      "blueprint": "eval_blueprints/I/I4_blueprint.md",
+      "slash_command": "/repo-analyser-polyglot-pair",
+      "output_json": "generated_projects/{run_id}/I4/output.json",
+      "golden_json": "generated_projects/_golden/I4/polyglot_manifest.json",
+      "make_run": "make run-skill SKILL=I4 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill I4 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-polyglot-pair` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill I4 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I4` or open `generated_projects/<run_id>/I4/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "I5",
+      "name": "Dockerize",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "description": "Containerize a service so it builds and runs cleanly in Docker with health check proof.",
+      "depends_on": [],
+      "agent_spec": "agents/intermediate/I5_dockerize_agent.md",
+      "skill_spec": "skills/intermediate/I5_dockerize.skill.md",
+      "blueprint": "eval_blueprints/I/I5_blueprint.md",
+      "slash_command": "/repo-analyser-dockerize",
+      "output_json": "generated_projects/{run_id}/I5/output.json",
+      "golden_json": "generated_projects/_golden/I5/docker_manifest.json",
+      "make_run": "make run-skill SKILL=I5 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill I5 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-dockerize` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill I5 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I5` or open `generated_projects/<run_id>/I5/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "I6",
+      "name": "Bug Diagnosis",
+      "level": "INTERMEDIATE",
+      "level_code": "I",
+      "description": "Reproduce seeded bug, identify root cause with file paths, apply minimal fix, verify with command proof.",
+      "depends_on": [
+        "I2"
+      ],
+      "agent_spec": "agents/intermediate/I6_bug_diagnosis_agent.md",
+      "skill_spec": "skills/intermediate/I6_bug_diagnosis.skill.md",
+      "blueprint": "eval_blueprints/I/I6_blueprint.md",
+      "slash_command": "/repo-analyser-bug-diagnosis",
+      "output_json": "generated_projects/{run_id}/I6/output.json",
+      "golden_json": "generated_projects/_golden/I6/bug_fix_report.json",
+      "make_run": "make run-skill SKILL=I6 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill I6 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-bug-diagnosis` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill I6 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=I6` or open `generated_projects/<run_id>/I6/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "name": "Multi Worktree Plan",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "description": "Split one feature/analysis task into parallel worktrees or agent sessions without merge chaos.",
+      "depends_on": [],
+      "agent_spec": "agents/advanced/A1_multi_worktree_plan_agent.md",
+      "skill_spec": "skills/advanced/A1_multi_worktree_plan.skill.md",
+      "blueprint": "eval_blueprints/A/A1_blueprint.md",
+      "slash_command": "/repo-analyser-worktree-plan",
+      "output_json": "generated_projects/{run_id}/A1/output.json",
+      "golden_json": "generated_projects/_golden/A1/worktree_plan.json",
+      "make_run": "make run-skill SKILL=A1 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill A1 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-worktree-plan` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill A1 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A1` or open `generated_projects/<run_id>/A1/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "name": "Parallel Worktrees Execute",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "description": "Create two parallel worktrees, make independent changes, reconcile cleanly with test proof.",
+      "depends_on": [
+        "A1"
+      ],
+      "agent_spec": "agents/advanced/A2_parallel_worktrees_execute_agent.md",
+      "skill_spec": "skills/advanced/A2_parallel_worktrees_execute.skill.md",
+      "blueprint": "eval_blueprints/A/A2_blueprint.md",
+      "slash_command": "/repo-analyser-worktree-execute",
+      "output_json": "generated_projects/{run_id}/A2/output.json",
+      "golden_json": "generated_projects/_golden/A2/worktree_execution_report.json",
+      "make_run": "make run-skill SKILL=A2 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill A2 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-worktree-execute` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill A2 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A2` or open `generated_projects/<run_id>/A2/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "name": "Polyglot Fraud System",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "description": "Build mini fraud-score system: FastAPI ingestion, Node.js worker, Rust scoring engine with tests and README.",
+      "depends_on": [
+        "B4",
+        "B5",
+        "B6",
+        "I4"
+      ],
+      "agent_spec": "agents/advanced/A3_polyglot_fraud_system_agent.md",
+      "skill_spec": "skills/advanced/A3_polyglot_fraud_system.skill.md",
+      "blueprint": "eval_blueprints/A/A3_blueprint.md",
+      "slash_command": "/repo-analyser-fraud-system",
+      "output_json": "generated_projects/{run_id}/A3/output.json",
+      "golden_json": "generated_projects/_golden/A3/fraud_system_manifest.json",
+      "make_run": "make run-skill SKILL=A3 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill A3 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-fraud-system` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill A3 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A3` or open `generated_projects/<run_id>/A3/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "name": "Modernization Executable",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "description": "Analyze repo for modernization opportunities, prioritize, implement highest-value lowest-risk first step.",
+      "depends_on": [
+        "B1",
+        "B3"
+      ],
+      "agent_spec": "agents/advanced/A4_modernization_executable_agent.md",
+      "skill_spec": "skills/advanced/A4_modernization_executable.skill.md",
+      "blueprint": "eval_blueprints/A/A4_blueprint.md",
+      "slash_command": "/repo-analyser-modernization",
+      "output_json": "generated_projects/{run_id}/A4/output.json",
+      "golden_json": "generated_projects/_golden/A4/modernization_report.json",
+      "make_run": "make run-skill SKILL=A4 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill A4 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-modernization` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill A4 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A4` or open `generated_projects/<run_id>/A4/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "name": "Adversarial Code Review",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "description": "Review agent-generated PR for correctness, security, test, performance, maintainability issues; propose fixes.",
+      "depends_on": [],
+      "agent_spec": "agents/advanced/A5_adversarial_code_review_agent.md",
+      "skill_spec": "skills/advanced/A5_adversarial_code_review.skill.md",
+      "blueprint": "eval_blueprints/A/A5_blueprint.md",
+      "slash_command": "/repo-analyser-code-review",
+      "output_json": "generated_projects/{run_id}/A5/output.json",
+      "golden_json": "generated_projects/_golden/A5/code_review_report.json",
+      "make_run": "make run-skill SKILL=A5 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill A5 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-code-review` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill A5 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A5` or open `generated_projects/<run_id>/A5/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "name": "Performance Improvement",
+      "level": "ADVANCED",
+      "level_code": "A",
+      "description": "Find real performance bottleneck, make measurable minimal improvement, prove behavior unchanged.",
+      "depends_on": [],
+      "agent_spec": "agents/advanced/A6_performance_improvement_agent.md",
+      "skill_spec": "skills/advanced/A6_performance_improvement.skill.md",
+      "blueprint": "eval_blueprints/A/A6_blueprint.md",
+      "slash_command": "/repo-analyser-performance-tuning",
+      "output_json": "generated_projects/{run_id}/A6/output.json",
+      "golden_json": "generated_projects/_golden/A6/performance_report.json",
+      "make_run": "make run-skill SKILL=A6 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill A6 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-performance-tuning` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill A6 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=A6` or open `generated_projects/<run_id>/A6/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "D1",
+      "name": "Terraform Plan",
+      "level": "INFRA",
+      "level_code": "D",
+      "description": "Write Terraform for small service that passes validate and produces clean plan against test backend.",
+      "depends_on": [],
+      "agent_spec": "agents/infra_devops/D1_terraform_plan_agent.md",
+      "skill_spec": "skills/infra/D1_terraform_plan.skill.md",
+      "blueprint": "eval_blueprints/D/D1_blueprint.md",
+      "slash_command": "/repo-analyser-terraform",
+      "output_json": "generated_projects/{run_id}/D1/output.json",
+      "golden_json": "generated_projects/_golden/D1/terraform_manifest.json",
+      "make_run": "make run-skill SKILL=D1 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill D1 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-terraform` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill D1 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D1` or open `generated_projects/<run_id>/D1/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "D2",
+      "name": "Docker Compose Stack",
+      "level": "INFRA",
+      "level_code": "D",
+      "description": "Stand up multi-service stack (API + DB + worker) with docker-compose, seed data, and E2E test script.",
+      "depends_on": [
+        "I5"
+      ],
+      "agent_spec": "agents/infra_devops/D2_docker_compose_stack_agent.md",
+      "skill_spec": "skills/infra/D2_docker_compose_stack.skill.md",
+      "blueprint": "eval_blueprints/D/D2_blueprint.md",
+      "slash_command": "/repo-analyser-compose-stack",
+      "output_json": "generated_projects/{run_id}/D2/output.json",
+      "golden_json": "generated_projects/_golden/D2/compose_manifest.json",
+      "make_run": "make run-skill SKILL=D2 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill D2 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-compose-stack` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill D2 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D2` or open `generated_projects/<run_id>/D2/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "D3",
+      "name": "Ci Pipeline",
+      "level": "INFRA",
+      "level_code": "D",
+      "description": "Write CI workflow that lints, tests, builds and tags container image with green run proof.",
+      "depends_on": [
+        "B3",
+        "I5"
+      ],
+      "agent_spec": "agents/infra_devops/D3_ci_pipeline_agent.md",
+      "skill_spec": "skills/infra/D3_ci_pipeline.skill.md",
+      "blueprint": "eval_blueprints/D/D3_blueprint.md",
+      "slash_command": "/repo-analyser-ci-pipeline",
+      "output_json": "generated_projects/{run_id}/D3/output.json",
+      "golden_json": "generated_projects/_golden/D3/ci_manifest.json",
+      "make_run": "make run-skill SKILL=D3 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill D3 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-ci-pipeline` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill D3 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D3` or open `generated_projects/<run_id>/D3/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "D4",
+      "name": "Kubernetes Manifests",
+      "level": "INFRA",
+      "level_code": "D",
+      "description": "Write K8s manifests, validate with dry-run/kubeval, deploy on kind/minikube with curl proof.",
+      "depends_on": [
+        "I5"
+      ],
+      "agent_spec": "agents/infra_devops/D4_kubernetes_manifests_agent.md",
+      "skill_spec": "skills/infra/D4_kubernetes_manifests.skill.md",
+      "blueprint": "eval_blueprints/D/D4_blueprint.md",
+      "slash_command": "/repo-analyser-kubernetes",
+      "output_json": "generated_projects/{run_id}/D4/output.json",
+      "golden_json": "generated_projects/_golden/D4/k8s_manifest.json",
+      "make_run": "make run-skill SKILL=D4 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill D4 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-kubernetes` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill D4 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D4` or open `generated_projects/<run_id>/D4/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "D5",
+      "name": "Reproducible Dev Env",
+      "level": "INFRA",
+      "level_code": "D",
+      "description": "Bootstrap repo from fresh clone with single command; tests pass on clean machine.",
+      "depends_on": [
+        "B3"
+      ],
+      "agent_spec": "agents/infra_devops/D5_reproducible_dev_env_agent.md",
+      "skill_spec": "skills/infra/D5_reproducible_dev_env.skill.md",
+      "blueprint": "eval_blueprints/D/D5_blueprint.md",
+      "slash_command": "/repo-analyser-dev-bootstrap",
+      "output_json": "generated_projects/{run_id}/D5/output.json",
+      "golden_json": "generated_projects/_golden/D5/bootstrap_manifest.json",
+      "make_run": "make run-skill SKILL=D5 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill D5 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-dev-bootstrap` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill D5 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D5` or open `generated_projects/<run_id>/D5/output.md`"
+        }
+      ]
+    },
+    {
+      "task_id": "D6",
+      "name": "Observability Bolt On",
+      "level": "INFRA",
+      "level_code": "D",
+      "description": "Add structured logging and /metrics endpoint; stand up Prometheus + Grafana with working dashboard panel.",
+      "depends_on": [
+        "I5"
+      ],
+      "agent_spec": "agents/infra_devops/D6_observability_bolt_on_agent.md",
+      "skill_spec": "skills/infra/D6_observability_bolt_on.skill.md",
+      "blueprint": "eval_blueprints/D/D6_blueprint.md",
+      "slash_command": "/repo-analyser-observability",
+      "output_json": "generated_projects/{run_id}/D6/output.json",
+      "golden_json": "generated_projects/_golden/D6/observability_manifest.json",
+      "make_run": "make run-skill SKILL=D6 RUN_ID=<run_id>",
+      "finish_command": "python3 -m runtime.skill_finish write --run-id <run_id> --skill D6 --payload-file payload.json",
+      "run_steps": [
+        {
+          "title": "Open in Cursor",
+          "body": "Type `/repo-analyser-observability` in chat, or read the agent spec manually."
+        },
+        {
+          "title": "Read specs (in order)",
+          "body": "Agent spec \u2192 Skill spec \u2192 Eval blueprint \u2192 docs/HOW_TO_RUN.md"
+        },
+        {
+          "title": "Execute the task",
+          "body": "Follow phases in the agent spec. For repo tasks, set `repository_path`. For build tasks, produce code + tests + README with real command proofs."
+        },
+        {
+          "title": "Write output JSON + report",
+          "body": "`python3 -m runtime.skill_finish write --run-id <run_id> --skill D6 --payload-file payload.json`"
+        },
+        {
+          "title": "Verify (optional)",
+          "body": "`make skill-done RUN_ID=<run_id> SKILL=D6` or open `generated_projects/<run_id>/D6/output.md`"
+        }
+      ]
+    }
+  ]
+}

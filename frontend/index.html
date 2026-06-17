@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Repo-Analyser — Agent Guide</title>
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">RA</span>
+      <div>
+        <h1>Repo-Analyser</h1>
+        <p class="tagline">24 agents · live skill reports · no deploy</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <nav class="nav-tabs">
+        <button type="button" class="nav-tab active" data-view="agents">Agents</button>
+        <button type="button" class="nav-tab" data-view="live">Live runs</button>
+      </nav>
+      <input id="search" type="search" placeholder="Search agents…" autocomplete="off" />
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <section class="panel">
+        <h2>Quick start</h2>
+        <ol id="setup-steps" class="setup-list"></ol>
+        <button type="button" class="btn btn-primary" id="copy-setup">Copy setup commands</button>
+      </section>
+
+      <section class="panel">
+        <h2>Filter by level</h2>
+        <div id="level-filters" class="chip-group"></div>
+        <button type="button" class="btn btn-ghost" id="clear-filters">Show all 24</button>
+      </section>
+
+      <section class="panel stats">
+        <div><strong id="stat-visible">0</strong> shown</div>
+        <div><strong id="stat-total">24</strong> total</div>
+      </section>
+    </aside>
+
+    <main class="main">
+      <section id="live-panel" class="live-panel panel hidden">
+        <div class="live-header">
+          <h2>Latest skill run</h2>
+          <span id="live-poll" class="muted">Polling for updates…</span>
+        </div>
+        <div id="live-empty" class="muted">No skill runs yet. Finish any skill with <code>skill_finish write</code> — the report opens here automatically.</div>
+        <div id="live-content" class="hidden">
+          <div class="live-meta">
+            <span id="live-badge" class="badge"></span>
+            <span id="live-status" class="status-pill"></span>
+          </div>
+          <h3 id="live-title"></h3>
+          <p id="live-headline" class="muted"></p>
+          <dl id="live-metrics" class="metrics-grid"></dl>
+          <div id="live-report" class="report-md"></div>
+        </div>
+        <section class="panel live-history-panel">
+          <h2>Recent runs</h2>
+          <ul id="live-history" class="history-list"></ul>
+        </section>
+      </section>
+
+      <section id="agents-panel">
+      <section id="welcome" class="welcome panel">
+        <h2>How this UI works</h2>
+        <p>
+          When you finish a skill (<code>skill_finish write</code> or a Cursor slash command), the local UI
+          starts automatically and opens the report under <strong>Live runs</strong>.
+          You can also run <code>make serve-frontend</code> yourself to keep it open.
+        </p>
+      </section>
+
+      <div id="skill-grid" class="skill-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="detail-dialog" class="detail-dialog">
+    <form method="dialog" class="detail-inner">
+      <header class="detail-header">
+        <div>
+          <span id="detail-badge" class="badge"></span>
+          <h2 id="detail-title"></h2>
+          <p id="detail-desc" class="muted"></p>
+        </div>
+        <button type="submit" class="btn btn-ghost close-btn" aria-label="Close">✕</button>
+      </header>
+
+      <div class="detail-body">
+        <section>
+          <h3>Depends on</h3>
+          <div id="detail-deps" class="chip-group"></div>
+        </section>
+
+        <section>
+          <h3>Cursor command</h3>
+          <div class="cmd-row">
+            <code id="detail-slash"></code>
+            <button type="button" class="btn btn-sm" data-copy="detail-slash">Copy</button>
+          </div>
+        </section>
+
+        <section>
+          <h3>File locations</h3>
+          <ul id="detail-files" class="file-list"></ul>
+        </section>
+
+        <section>
+          <h3>How to run</h3>
+          <ol id="detail-steps" class="run-steps"></ol>
+        </section>
+
+        <section>
+          <h3>Shell commands</h3>
+          <div class="cmd-block">
+            <label>Finish (write JSON + report)</label>
+            <div class="cmd-row">
+              <code id="detail-finish"></code>
+              <button type="button" class="btn btn-sm" data-copy="detail-finish">Copy</button>
+            </div>
+          </div>
+          <div class="cmd-block">
+            <label>Deterministic runtime (golden copy — for testing framework)</label>
+            <div class="cmd-row">
+              <code id="detail-make"></code>
+              <button type="button" class="btn btn-sm" data-copy="detail-make">Copy</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden>Copied</div>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script src="js/app.js" type="module"></script>
+</body>
+</html>

@@ -32,6 +32,8 @@ cd Repo-Analyser
 make build-skills          # compile agent specs → .skill.md + core/skill_registry.json
 make expand-agent-specs    # expand agents/ to full procedural specs (optional)
 make install-cursor-skills # install 24 skills into Cursor / menu
+make build-frontend        # build local agent guide UI
+make serve-frontend        # open http://127.0.0.1:8765 (no deploy)
 make validate              # verify specs, blueprints, golden examples, DAG
 ```
 
@@ -46,6 +48,8 @@ Restart Cursor after `install-cursor-skills` if `/repo-analyser-*` commands do n
 | `make build-skills` | Regenerate skill files and registry |
 | `make expand-agent-specs` | Expand all 24 agent specs to procedural detail |
 | `make install-cursor-skills` | Install skills into Cursor `/` menu |
+| `make build-frontend` | Generate local browser guide (`frontend/data/skills.json`) |
+| `make serve-frontend` | Open local UI at http://127.0.0.1:8765 |
 | `make validate` | Validate all agent specs and DAG |
 | `make validate-dag` | Validate skill dependency graph |
 | `make run-skill SKILL=B1 RUN_ID=my-run` | Run one skill |
@@ -89,6 +93,7 @@ python -m runtime.validate_pipeline --run-id full-run
 | `runtime/` | Deterministic orchestrator, runner, validator |
 | `generated_projects/_golden/` | Reference JSON outputs |
 | `generated_projects/{run_id}/` | Your run outputs |
+| `frontend/` | Local browser guide for all 24 agents |
 | `tools/install_cursor_skills.py` | Installs Cursor `/repo-analyser-*` skills |
 
 ---
