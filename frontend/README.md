@@ -40,7 +40,17 @@ When a skill finishes (`skill_finish write` or Cursor slash commands):
 | Tab | Purpose |
 |-----|---------|
 | **Agents** | Browse all 24 skills, copy slash commands and file paths |
+| **Pipeline** | Walk through all 24 agents on one target folder (Run all 24 button) |
 | **Live runs** | Latest skill reports with auto-refresh |
+
+## Run all 24 (Pipeline wizard)
+
+1. Run `make serve-frontend` — **required** (provides `/api/pipeline/plan`).
+2. Click **Run all 24** in the header or **Choose target folder** on the Pipeline tab.
+3. Enter the full path to the repo you want to analyze.
+4. For each step: copy the slash command → run in Cursor → **Mark done & next**.
+
+Progress is stored in browser `localStorage`. Agents are **not** executed by the browser — only guided.
 
 ## Options
 

@@ -98,12 +98,15 @@ Keep the UI open before you start working:
 make serve-frontend
 ```
 
-Opens `http://127.0.0.1:8765` with two tabs:
+Opens `http://127.0.0.1:8765` with three tabs:
 
 | Tab | Purpose |
 |-----|---------|
 | **Agents** | Browse all 24 skills, copy slash commands and file paths |
+| **Pipeline** | Step through all 24 agents on one target folder (see below) |
 | **Live runs** | Latest skill reports; auto-updates when `skill_finish write` runs |
+
+**Important:** Open the UI via `make serve-frontend` (not by double-clicking `frontend/index.html`). The **Run all 24** wizard needs the local API at `POST /api/pipeline/plan`.
 
 ### Frontend options
 
@@ -136,6 +139,21 @@ make serve-frontend   # start manually first
 ---
 
 ## 5. Daily workflow
+
+### Run all 24 agents on one folder (Pipeline wizard)
+
+Use this when you want to analyze a whole repository end-to-end in dependency order.
+
+1. Start the UI: `make serve-frontend` (leave the terminal open).
+2. Open **http://127.0.0.1:8765** → click **Run all 24** (or open the **Pipeline** tab).
+3. Enter the **full path** to the target repo (e.g. `/Users/you/projects/my-app`).
+4. For each agent shown:
+   - Copy the slash command (e.g. `/repo-analyser-er-diagram @/Users/you/projects/my-app`)
+   - Paste and run it in **Cursor chat**
+   - When finished, click **Mark done & next** (or let **Live runs** auto-advance when `skill_finish write` completes)
+5. Progress is saved in your browser (`localStorage`) until you click **Reset**.
+
+The wizard does **not** run agents for you — it tracks which step you are on and which command to run next.
 
 ### Run one skill on a target repo
 
@@ -214,6 +232,17 @@ Then **restart Cursor** completely.
 - Ensure `REPO_ANALYSER_AUTO_FRONTEND` is not `0`
 - Open manually: `http://127.0.0.1:8765/?live=1`
 - Or run `make serve-frontend` and refresh
+
+### Run all 24 stuck on "Validating…" or connection refused
+
+- The UI must be served by `make serve-frontend` — not opened as a `file://` URL or via a plain static server.
+- Start the server: `cd Repo-Analyser && make serve-frontend`
+- Refresh the browser and try again.
+
+### Pipeline shows 0% and nothing happens
+
+- Expected until you run the current agent in Cursor and click **Mark done & next**.
+- Copy the command from the Pipeline tab, run it in chat, then advance manually.
 
 ### Port 8765 already in use
 

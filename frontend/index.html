@@ -18,8 +18,10 @@
     <div class="topbar-actions">
       <nav class="nav-tabs">
         <button type="button" class="nav-tab active" data-view="agents">Agents</button>
+        <button type="button" class="nav-tab" data-view="pipeline">Pipeline</button>
         <button type="button" class="nav-tab" data-view="live">Live runs</button>
       </nav>
+      <button type="button" class="btn btn-run-all" id="run-all-btn">Run all 24</button>
       <input id="search" type="search" placeholder="Search agents…" autocomplete="off" />
     </div>
   </header>
@@ -111,8 +113,67 @@
 
       <div id="skill-grid" class="skill-grid-root"></div>
       </section>
+
+      <section id="pipeline-panel" class="panel pipeline-panel hidden">
+        <div id="pipeline-empty">
+          <h2>Run all 24 agents on a folder</h2>
+          <p class="muted">
+            Walk through every agent in dependency order. You run each one in Cursor on your target repo;
+            the UI tracks progress and opens reports as they finish.
+          </p>
+          <button type="button" class="btn btn-primary" id="pipeline-empty-start">Choose target folder</button>
+        </div>
+        <div id="pipeline-active" class="hidden">
+          <div class="pipeline-header">
+            <div>
+              <h2>Agent pipeline</h2>
+              <p class="muted">Target: <code id="pipeline-folder"></code> · run <code id="pipeline-run-id"></code></p>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm" id="pipeline-reset">Reset</button>
+          </div>
+          <div class="pipeline-current panel">
+            <p id="pipeline-waiting-hint" class="pipeline-waiting-hint hidden"></p>
+            <span id="pipeline-step-badge" class="badge"></span>
+            <h3 id="pipeline-step-title">—</h3>
+            <p class="muted">Paste this in Cursor chat:</p>
+            <div class="cmd-row">
+              <code id="pipeline-step-command"></code>
+              <button type="button" class="btn btn-sm" id="pipeline-copy">Copy</button>
+            </div>
+            <p id="pipeline-finish-hint" class="muted pipeline-finish-hint"></p>
+            <div class="pipeline-actions">
+              <button type="button" class="btn" id="pipeline-open-detail">Agent guide</button>
+              <button type="button" class="btn btn-primary" id="pipeline-next">Mark done &amp; next</button>
+            </div>
+          </div>
+          <h3 class="pipeline-steps-heading">All steps</h3>
+          <ol id="pipeline-steps" class="pipeline-steps"></ol>
+        </div>
+      </section>
     </main>
   </div>
+
+  <dialog id="pipeline-dialog" class="pipeline-dialog">
+    <form method="dialog" id="pipeline-form" class="pipeline-dialog-inner">
+      <header>
+        <h2>Target folder</h2>
+        <p class="muted">Enter the full path to the repository you want to analyze. The UI will guide you through all 24 agents <strong>one at a time in Cursor</strong> (not automatic).</p>
+      </header>
+      <label for="pipeline-path-input">Repository path</label>
+      <input
+        id="pipeline-path-input"
+        type="text"
+        placeholder="/Users/you/projects/my-repo"
+        autocomplete="off"
+        required
+      />
+      <p id="pipeline-error" class="pipeline-error hidden"></p>
+      <footer class="pipeline-dialog-footer">
+        <button type="button" class="btn btn-ghost" id="pipeline-cancel-btn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="pipeline-start-btn">Start pipeline</button>
+      </footer>
+    </form>
+  </dialog>
 
   <dialog id="detail-dialog" class="detail-dialog">
     <form method="dialog" class="detail-inner">

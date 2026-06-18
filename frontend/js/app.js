@@ -1,6 +1,9 @@
+import { initPipeline } from "./pipeline.js";
+
 const LEVEL_COLORS = { B: "Basic", I: "Intermediate", A: "Advanced", D: "Infra" };
 
 let catalog = null;
+let pipeline = null;
 let activeLevel = null;
 let query = "";
 let activeView = "agents";
@@ -36,6 +39,29 @@ const els = {
   catalogBody: document.getElementById("agent-catalog-body"),
   catalogCount: document.getElementById("catalog-count"),
   agentCatalog: document.getElementById("agent-catalog"),
+  pipelinePanel: document.getElementById("pipeline-panel"),
+  pipelineEmpty: document.getElementById("pipeline-empty"),
+  pipelineActive: document.getElementById("pipeline-active"),
+  pipelineRunId: document.getElementById("pipeline-run-id"),
+  pipelineFolder: document.getElementById("pipeline-folder"),
+  pipelineStepBadge: document.getElementById("pipeline-step-badge"),
+  pipelineStepTitle: document.getElementById("pipeline-step-title"),
+  pipelineStepCommand: document.getElementById("pipeline-step-command"),
+  pipelineFinishHint: document.getElementById("pipeline-finish-hint"),
+  pipelineNext: document.getElementById("pipeline-next"),
+  pipelineCopy: document.getElementById("pipeline-copy"),
+  pipelineOpenDetail: document.getElementById("pipeline-open-detail"),
+  pipelineReset: document.getElementById("pipeline-reset"),
+  pipelineSteps: document.getElementById("pipeline-steps"),
+  pipelineDialog: document.getElementById("pipeline-dialog"),
+  pipelineForm: document.getElementById("pipeline-form"),
+  pipelinePathInput: document.getElementById("pipeline-path-input"),
+  pipelineStartBtn: document.getElementById("pipeline-start-btn"),
+  pipelineError: document.getElementById("pipeline-error"),
+  pipelineCancelBtn: document.getElementById("pipeline-cancel-btn"),
+  pipelineEmptyStart: document.getElementById("pipeline-empty-start"),
+  runAllBtn: document.getElementById("run-all-btn"),
+  pipelineWaitingHint: document.getElementById("pipeline-waiting-hint"),
 };
 
 async function loadCatalog() {
@@ -314,9 +340,13 @@ function setView(view) {
   });
   els.agentsPanel.classList.toggle("hidden", view !== "agents");
   els.livePanel.classList.toggle("hidden", view !== "live");
+  els.pipelinePanel.classList.toggle("hidden", view !== "pipeline");
   els.search.classList.toggle("hidden", view !== "agents");
   if (view === "live") {
     refreshLive();
+  }
+  if (view === "pipeline") {
+    pipeline?.render();
   }
 }
 
@@ -364,7 +394,15 @@ function initMermaid() {
   if (mermaidInitialized || !window.mermaid) return;
   window.mermaid.initialize({
     startOnLoad: false,
-    theme: "dark",
+    theme: "base",
+    themeVariables: {
+      primaryColor: "#e0f2fe",
+      primaryTextColor: "#1e3a5f",
+      primaryBorderColor: "#7dd3fc",
+      lineColor: "#64748b",
+      secondaryColor: "#fef3c7",
+      tertiaryColor: "#dcfce7",
+    },
     securityLevel: "loose",
     er: { useMaxWidth: true },
   });
@@ -472,6 +510,7 @@ async function refreshLive() {
     }
     await renderLiveEntry(entry);
     renderHistory(live.history, entry);
+    pipeline?.onLiveUpdate(live);
     els.livePoll.textContent = entry
       ? `Updated ${entry.published_at || entry.updated_at}`
       : "Polling…";
@@ -483,7 +522,7 @@ async function refreshLive() {
 function startPolling() {
   if (pollTimer) clearInterval(pollTimer);
   pollTimer = setInterval(() => {
-    if (activeView === "live") refreshLive();
+    if (activeView === "live" || activeView === "pipeline") refreshLive();
   }, 2500);
 }
 
@@ -505,6 +544,14 @@ async function init() {
     renderAgentIndex();
     renderGrid();
     startPolling();
+
+    pipeline = initPipeline({
+      els,
+      copyText,
+      showToast,
+      setView,
+      openDetail,
+    });
 
     if (els.copyAllCommands) {
       els.copyAllCommands.onclick = () => {

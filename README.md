@@ -21,12 +21,13 @@ Or: `make setup` (runs build-skills, install-cursor-skills, build-frontend, and 
 
 **Restart Cursor completely** after install — slash commands appear under `/` → search `repo-analyser`.
 
-Optional — keep the UI open before you start:
+Start the local UI (required for **Run all 24** pipeline wizard):
 
 ```bash
-make serve-frontend         # http://127.0.0.1:8765
-make validate               # verify specs and DAG
+make serve-frontend         # http://127.0.0.1:8765 — keep this terminal open
 ```
+
+The UI also auto-starts when a skill finishes via `skill_finish write`.
 
 ## Main guides
 
@@ -60,16 +61,23 @@ make test                              # test suite
 
 ## Cursor usage
 
-Type `/` in chat → search `repo-analyser` → e.g. `/repo-analyser-repo-inventory`, `/repo-analyser-api-mapping`
+Type `/` in chat → search `repo-analyser` → e.g. `/repo-analyser-repo-inventory`, `/repo-analyser-er-diagram @/path/to/repo`
 
-## Other docs
+### Run all 24 agents on one folder
+
+1. Run `make serve-frontend` and open **http://127.0.0.1:8765**
+2. Click **Run all 24** → enter the full path to your target repo
+3. For each step: copy the slash command, run it in Cursor, then click **Mark done & next**
+
+Agents run in Cursor — the UI guides you; it does not execute them automatically. See **[docs/SETUP.md](docs/SETUP.md)** §5.
+
+## More docs
 
 | Doc | Description |
 |-----|-------------|
-| [docs/SETUP.md](docs/SETUP.md) | **Start here** — setup, frontend auto-open, troubleshooting |
-| [docs/HOW_TO_RUN.md](docs/HOW_TO_RUN.md) | All 24 skills with commands and file paths |
 | [docs/OVERVIEW.md](docs/OVERVIEW.md) | Architecture overview |
 | [docs/STATUS.md](docs/STATUS.md) | Project status |
+| [frontend/README.md](frontend/README.md) | Local UI and Pipeline wizard |
 | [core/capability_registry.md](core/capability_registry.md) | Task registry with dependencies |
 
 ## Eval sources
