@@ -79,8 +79,3 @@ Agents run in Cursor — the UI guides you; it does not execute them automatical
 | [docs/STATUS.md](docs/STATUS.md) | Project status |
 | [frontend/README.md](frontend/README.md) | Local UI and Pipeline wizard |
 | [core/capability_registry.md](core/capability_registry.md) | Task registry with dependencies |
-
-## Eval sources
-
-- [PML Eval](https://docs.google.com/document/d/1VurgqAe_qZlMieK8pA4S2yJjWBd7cnoO8cuvh4zmNZs/edit)
-- [OCL Eval](https://docs.google.com/document/d/1Y23tu2ePPexkBhh_G0RCK1fNio_NQ3EZuTbgWa_UyPA/edit)
