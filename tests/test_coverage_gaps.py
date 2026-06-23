@@ -217,7 +217,7 @@ def test_skill_parser_remaining(tmp_path):
 
     bad_agent = tmp_path / "bad_agent.md"
     bad_agent.write_text(
-        "# Agent: Bad (B1)\n\n### Task ID\n`B1`\n\n### Capability Level\n`B`\n\n" "```json\n{broken\n```\n",
+        "# Agent: Bad (B1)\n\n### Task ID\n`B1`\n\n### Capability Level\n`B`\n\n```json\n{broken\n```\n",
         encoding="utf-8",
     )
     agent = parse_agent_markdown(bad_agent)

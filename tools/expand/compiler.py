@@ -65,7 +65,7 @@ def render_agent(task_id: str) -> str:
     input_bullets = "\n".join(f"- {item}" for item in INPUT_BULLETS.get(task_id, []))
     depends_on_section = "\n".join(f"- {d}" for d in depends) if depends else "- None"
     default_inputs_table = (
-        "| Field | Required | Description |\n" "|-------|----------|-------------|\n" "| See agent spec | — | — |"
+        "| Field | Required | Description |\n|-------|----------|-------------|\n| See agent spec | — | — |"
     )
     inputs_section = INPUTS.get(task_id, default_inputs_table)
 
@@ -82,7 +82,7 @@ You are the **{display_name}** in the Repo-Analyser deterministic eval framework
 
 **Objective:** {description}
 
-**Capability level:** `{task_meta['level']}` · **Time budget:** {time_budget} · **Depends on:** {depends_text}
+**Capability level:** `{task_meta["level"]}` · **Time budget:** {time_budget} · **Depends on:** {depends_text}
 
 Your primary deliverable is **strict JSON** at `generated_projects/{{run_id}}/{task_id}/output.json`. Use `python3 -m runtime.skill_finish write` to write JSON and **auto-open the terminal CLI** — do not write a separate markdown report.
 
@@ -150,7 +150,7 @@ See output schema in **Registry compatibility** below and `generated_projects/_g
 `{task_id}`
 
 ### Capability Level
-`{task_meta['level']}`
+`{task_meta["level"]}`
 
 ### Time Budget
 {time_budget}
@@ -184,8 +184,8 @@ Output file: `generated_projects/{{run_id}}/{task_id}/{output_file}`
 
 ## References
 
-- Skill spec: `{meta['path']}`
-- Eval blueprint: `eval_blueprints/{task_meta['level']}/{task_id}_blueprint.md`
+- Skill spec: `{meta["path"]}`
+- Eval blueprint: `eval_blueprints/{task_meta["level"]}/{task_id}_blueprint.md`
 - Execution rules: `core/execution_rules.md`
-- Agent spec path: `agents/{task_meta['folder']}/{task_id}_{slug}_agent.md`
+- Agent spec path: `agents/{task_meta["folder"]}/{task_id}_{slug}_agent.md`
 """

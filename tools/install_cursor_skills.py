@@ -41,13 +41,13 @@ name: {name}
 description: {description}
 ---
 
-# Repo-Analyser — {meta['name']} ({task_id})
+# Repo-Analyser — {meta["name"]} ({task_id})
 
 Execute **Repo-Analyser skill {task_id}** deterministically. Follow the Markdown specs — no free-form guessing.
 
 ## What this skill does
 
-{meta['description']}
+{meta["description"]}
 
 ## Depends on
 
@@ -76,7 +76,7 @@ If the terminal UI does not appear, open `generated_projects/{{run_id}}/{task_id
 python3 -m runtime.skill_finish --run-id <run_id> --skill {task_id}
 ```
 
-Golden reference: `generated_projects/_golden/{task_id}/{meta.get('output_file', 'output.json')}`
+Golden reference: `generated_projects/_golden/{task_id}/{meta.get("output_file", "output.json")}`
 
 ## FINAL STEP (mandatory — last action, no steps after this)
 

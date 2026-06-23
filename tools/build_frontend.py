@@ -73,7 +73,7 @@ def make_entry(task_id: str, meta: dict, task_meta: dict) -> dict:
         "golden_json": f"generated_projects/_golden/{task_id}/{output_file}",
         "make_run": f"make run-skill SKILL={task_id} RUN_ID=<run_id>",
         "finish_command": (
-            f"python3 -m runtime.skill_finish write --run-id <run_id> --skill {task_id} " f"--payload-file payload.json"
+            f"python3 -m runtime.skill_finish write --run-id <run_id> --skill {task_id} --payload-file payload.json"
         ),
         "run_steps": run_steps(task_id),
     }

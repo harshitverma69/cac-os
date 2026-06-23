@@ -115,16 +115,16 @@ def render_skill_markdown(
     validation_block = "\n".join(f"- {rule}" for rule in validation)
     failure_block = "\n".join(f"- {item}" for item in failure)
 
-    return f"""## Skill: {agent['name']}
+    return f"""## Skill: {agent["name"]}
 
 ### Task ID
-`{agent['skill_id']}`
+`{agent["skill_id"]}`
 
 ### Level
-`{agent['level']}`
+`{agent["level"]}`
 
 ### Objective
-{agent['description']}
+{agent["description"]}
 
 ### Depends On
 {depends_block}
@@ -149,8 +149,8 @@ def render_skill_markdown(
 {failure_block}
 
 ### Sources
-- Agent: `{agent['agent_source']}`
-- Blueprint: `eval_blueprints/{meta['level']}/{agent['skill_id']}_blueprint.md`
+- Agent: `{agent["agent_source"]}`
+- Blueprint: `eval_blueprints/{meta["level"]}/{agent["skill_id"]}_blueprint.md`
 - Skill: `{skill_rel_path}`
 """
 

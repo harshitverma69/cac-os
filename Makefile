@@ -105,6 +105,7 @@ test:
 
 lint:
 	$(PYTHON) -m ruff check runtime tools tests
+	$(PYTHON) -m ruff format --check runtime tools tests
 	$(PYTHON) -m black --check runtime tools tests
 
 typecheck:
