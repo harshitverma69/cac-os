@@ -112,7 +112,12 @@ def interactive_loop(generated_root: Path | None = None) -> int:
     theme = Theme()
     print("")
     print(theme.cyan("╭──────────────────────────────────────────────────────────────────────╮"))
-    print(theme.cyan("│") + f"  {theme.bold('Repo-Analyser Run Browser')}  {theme.dim('browse past skill outputs')}" + " " * 8 + theme.cyan("│"))
+    print(
+        theme.cyan("│")
+        + f"  {theme.bold('Repo-Analyser Run Browser')}  {theme.dim('browse past skill outputs')}"
+        + " " * 8
+        + theme.cyan("│")
+    )
     print(theme.cyan("╰──────────────────────────────────────────────────────────────────────╯"))
     print("")
 

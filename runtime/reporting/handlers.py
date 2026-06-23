@@ -161,10 +161,7 @@ def render_i1(payload: dict) -> str:
         for table_row in tables:
             if isinstance(table_row, dict):
                 columns = table_row.get("columns", [])[:5]
-                col_text = ", ".join(
-                    col if isinstance(col, str) else str(col.get("name", col))
-                    for col in columns
-                )
+                col_text = ", ".join(col if isinstance(col, str) else str(col.get("name", col)) for col in columns)
                 rows.append(
                     (
                         table_row.get("name", table_row.get("table_name", "")),

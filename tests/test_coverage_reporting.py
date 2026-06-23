@@ -76,14 +76,21 @@ def test_handlers_b1_empty_and_edges():
 
 def test_handlers_b2_b3_i1_i2():
     assert "No endpoints" in render_b2({})
-    assert render_b2({"endpoints": [{"method": "GET", "route": "/x"}], "frontend_routes": [{"path": "/f", "source_file": "f.ts"}]})
+    assert render_b2(
+        {"endpoints": [{"method": "GET", "route": "/x"}], "frontend_routes": [{"path": "/f", "source_file": "f.ts"}]}
+    )
     assert render_b3({"framework": "pytest", "commands": ["pytest"], "test_files": ["t.py"] * 60})
     assert render_b3({"framework": "pytest", "test_commands": [{"command": "pytest"}]})
     assert "No tables" in render_i1({})
     assert render_i1({"tables": ["plain"], "mermaid_er": "erDiagram\n  A {}"})
     assert render_i1({"entities": [{"name": "t", "source_file": "a.py", "columns": [{"name": "id"}]}]})
     assert "No steps" in render_i2({})
-    assert render_i2({"steps": [{"order": 1, "layer": "ctrl", "symbol": "h", "file_path": "a.py"}], "sequence_diagram_mermaid": "sequenceDiagram\n  A->>B: hi"})
+    assert render_i2(
+        {
+            "steps": [{"order": 1, "layer": "ctrl", "symbol": "h", "file_path": "a.py"}],
+            "sequence_diagram_mermaid": "sequenceDiagram\n  A->>B: hi",
+        }
+    )
 
 
 def test_handlers_issues_and_proof_and_generic():

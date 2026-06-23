@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 GOLDEN_DIR = ROOT / "generated_projects" / "_golden"
 TASKS = json.loads((ROOT / "scripts" / "task_registry.json").read_text(encoding="utf-8"))["tasks"]
 
+
 def _extract_section_text(text: str, heading: str) -> str:
     for prefix in ("###", "##"):
         pattern = rf"^{prefix} {re.escape(heading)}\s*\n(.*?)(?=\n(?:###|##) |\Z)"

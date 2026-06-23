@@ -90,7 +90,7 @@ def test_skill_parser_branches():
     deps = parse_depends_on(split_sections("### Depends On\nB1, B2\n"))
     assert "B1" in deps and "B2" in deps
 
-    bad_json = split_sections('### Output Contract\n```json\n{bad\n```\n')
+    bad_json = split_sections("### Output Contract\n```json\n{bad\n```\n")
     assert extract_json_block(bad_json, "Output Contract") is None
 
     assert parse_numbered_steps("1. first\n2. second") == ["first", "second"]
@@ -140,8 +140,9 @@ def test_registry_main_and_validate_pipeline(tmp_path, capsys):
             "skills": {},
             "coverage": {"coverage_status": "100%", "total_skills": 24},
         }
-        with patch("runtime.skill_registry_builder.write_registry"), patch(
-            "runtime.skill_registry_builder.write_how_to_run"
+        with (
+            patch("runtime.skill_registry_builder.write_registry"),
+            patch("runtime.skill_registry_builder.write_how_to_run"),
         ):
             assert registry_main() == 0
 

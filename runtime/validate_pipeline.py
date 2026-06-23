@@ -38,18 +38,14 @@ def validate_run_outputs(run_dir: Path, contracts: dict[str, dict]) -> tuple[lis
         output_path = run_dir / skill_id / "output.json"
         if not output_path.is_file():
             failed_skills.append(skill_id)
-            invalid_outputs.append(
-                {"skill_id": skill_id, "errors": ["MISSING_OUTPUT_FILE"]}
-            )
+            invalid_outputs.append({"skill_id": skill_id, "errors": ["MISSING_OUTPUT_FILE"]})
             continue
 
         try:
             payload = json.loads(output_path.read_text(encoding="utf-8"))
         except json.JSONDecodeError as exc:
             failed_skills.append(skill_id)
-            invalid_outputs.append(
-                {"skill_id": skill_id, "errors": [f"INVALID_JSON: {exc}"]}
-            )
+            invalid_outputs.append({"skill_id": skill_id, "errors": [f"INVALID_JSON: {exc}"]})
             continue
 
         contract = contracts.get(skill_id, {})

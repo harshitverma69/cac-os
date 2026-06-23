@@ -195,9 +195,7 @@ def parse_agent_markdown(path: Path) -> dict:
     output_body = sections.get("Outputs (STRICT JSON)", sections.get("Outputs", ""))
     output_match = OUTPUT_FILE.search(output_body)
     canonical_output = output_match.group(1) if output_match else "output.json"
-    output_contract = (
-        extract_json_block(sections, "Outputs (STRICT JSON)", "Outputs") or {}
-    )
+    output_contract = extract_json_block(sections, "Outputs (STRICT JSON)", "Outputs") or {}
     if not output_contract:
         json_match = JSON_FENCE.search(text)
         if json_match:

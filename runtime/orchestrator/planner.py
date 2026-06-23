@@ -82,11 +82,7 @@ def skills_for_domain(registry: dict, domain: str) -> list[str]:
         raise ValueError(f"Unknown domain: {domain}")
 
     return sorted(
-        (
-            skill_id
-            for skill_id, meta in registry.get("skills", {}).items()
-            if meta.get("level_code") == domain
-        ),
+        (skill_id for skill_id, meta in registry.get("skills", {}).items() if meta.get("level_code") == domain),
         key=task_sort_key,
     )
 

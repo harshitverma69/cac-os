@@ -213,9 +213,11 @@ def publish_skill_run(
 
     live = _load_live()
     live["latest"] = entry
-    history = [item for item in live.get("history", []) if not (
-        item.get("run_id") == run_id and item.get("skill_id") == skill_id
-    )]
+    history = [
+        item
+        for item in live.get("history", [])
+        if not (item.get("run_id") == run_id and item.get("skill_id") == skill_id)
+    ]
     history.insert(0, entry)
     live["history"] = history[:MAX_HISTORY]
     (FRONTEND_DATA / "live.json").write_text(canonical_json_dumps(live), encoding="utf-8")

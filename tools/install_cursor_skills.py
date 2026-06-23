@@ -91,8 +91,7 @@ def install_skills(target_root: Path, clean: bool = False) -> dict:
     if clean and target_root.is_dir():
         for child in target_root.iterdir():
             if child.is_dir() and (
-                child.name.startswith(f"{CURSOR_PREFIX}-")
-                or child.name.startswith("cac-os-")  # legacy prefix
+                child.name.startswith(f"{CURSOR_PREFIX}-") or child.name.startswith("cac-os-")  # legacy prefix
             ):
                 shutil.rmtree(child)
 

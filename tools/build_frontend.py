@@ -50,9 +50,7 @@ def run_steps(task_id: str) -> list[dict[str, str]]:
         },
         {
             "title": "Verify (optional)",
-            "body": (
-                f"`make skill-done RUN_ID=<run_id> SKILL={task_id}` — re-opens terminal + browser report"
-            ),
+            "body": (f"`make skill-done RUN_ID=<run_id> SKILL={task_id}` — re-opens terminal + browser report"),
         },
     ]
 
@@ -75,8 +73,7 @@ def make_entry(task_id: str, meta: dict, task_meta: dict) -> dict:
         "golden_json": f"generated_projects/_golden/{task_id}/{output_file}",
         "make_run": f"make run-skill SKILL={task_id} RUN_ID=<run_id>",
         "finish_command": (
-            f"python3 -m runtime.skill_finish write --run-id <run_id> --skill {task_id} "
-            f"--payload-file payload.json"
+            f"python3 -m runtime.skill_finish write --run-id <run_id> --skill {task_id} " f"--payload-file payload.json"
         ),
         "run_steps": run_steps(task_id),
     }
@@ -87,18 +84,12 @@ def main() -> int:
     tasks = json.loads(TASKS_PATH.read_text(encoding="utf-8"))["tasks"]
     skills = registry.get("skills", {})
 
-    entries = [
-        make_entry(task_id, skills[task_id], tasks[task_id])
-        for task_id in sorted(skills.keys(), key=sort_key)
-    ]
+    entries = [make_entry(task_id, skills[task_id], tasks[task_id]) for task_id in sorted(skills.keys(), key=sort_key)]
 
     payload = {
         "project": "Repo-Analyser",
         "skill_count": len(entries),
-        "levels": [
-            {"code": code, "label": LEVEL_LABELS[code]}
-            for code in ("B", "I", "A", "D")
-        ],
+        "levels": [{"code": code, "label": LEVEL_LABELS[code]} for code in ("B", "I", "A", "D")],
         "setup": {
             "title": "First-time setup",
             "steps": [

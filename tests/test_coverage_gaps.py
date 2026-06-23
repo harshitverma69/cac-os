@@ -217,8 +217,7 @@ def test_skill_parser_remaining(tmp_path):
 
     bad_agent = tmp_path / "bad_agent.md"
     bad_agent.write_text(
-        "# Agent: Bad (B1)\n\n### Task ID\n`B1`\n\n### Capability Level\n`B`\n\n"
-        "```json\n{broken\n```\n",
+        "# Agent: Bad (B1)\n\n### Task ID\n`B1`\n\n### Capability Level\n`B`\n\n" "```json\n{broken\n```\n",
         encoding="utf-8",
     )
     agent = parse_agent_markdown(bad_agent)
@@ -234,9 +233,7 @@ def test_skill_parser_remaining(tmp_path):
 def test_skill_registry_builder_remaining(tmp_path, monkeypatch):
     import runtime.skill_registry_builder as srb
 
-    cov = srb.validate_skill_coverage(
-        {"skills": {"B1": {"path": "missing/x.skill.md", "output_file": "o.json"}}}
-    )
+    cov = srb.validate_skill_coverage({"skills": {"B1": {"path": "missing/x.skill.md", "output_file": "o.json"}}})
     assert cov["missing_files"]
 
     tasks = json.loads((ROOT / "scripts" / "task_registry.json").read_text(encoding="utf-8"))

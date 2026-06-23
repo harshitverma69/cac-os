@@ -124,11 +124,7 @@ def parallel_waves(execution_order: list[str], graph: dict[str, list[str]]) -> l
     waves: list[list[str]] = []
 
     while remaining:
-        wave = [
-            skill_id
-            for skill_id in remaining
-            if all(dep in completed for dep in graph.get(skill_id, []))
-        ]
+        wave = [skill_id for skill_id in remaining if all(dep in completed for dep in graph.get(skill_id, []))]
         if not wave:
             raise ValueError("Unable to schedule parallel wave — dependency deadlock")
         wave = sorted(wave, key=task_sort_key)

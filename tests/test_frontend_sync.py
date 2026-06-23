@@ -69,4 +69,3 @@ def test_ensure_frontend_server_skips_when_disabled(monkeypatch):
     monkeypatch.setenv("REPO_ANALYSER_AUTO_FRONTEND", "0")
     monkeypatch.setattr(mod, "frontend_is_running", lambda port=None: False)
     assert ensure_frontend_server() is False
-

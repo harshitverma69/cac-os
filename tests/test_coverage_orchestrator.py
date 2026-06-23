@@ -210,7 +210,12 @@ def test_skill_orchestrator_module_main(capsys):
 
 def test_plugins_registry_and_base():
     registry = PluginRegistry()
-    plugin = GoldenReplayPlugin("B1", __import__("runtime.models", fromlist=["SkillSpec"]).SkillSpec.from_registry_entry("B1", {"name": "x", "level": "B", "level_code": "B"}))
+    plugin = GoldenReplayPlugin(
+        "B1",
+        __import__("runtime.models", fromlist=["SkillSpec"]).SkillSpec.from_registry_entry(
+            "B1", {"name": "x", "level": "B", "level_code": "B"}
+        ),
+    )
     registry.register(plugin)
     assert registry.get("b1") is plugin
     assert registry.all_plugins()

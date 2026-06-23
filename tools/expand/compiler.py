@@ -65,9 +65,7 @@ def render_agent(task_id: str) -> str:
     input_bullets = "\n".join(f"- {item}" for item in INPUT_BULLETS.get(task_id, []))
     depends_on_section = "\n".join(f"- {d}" for d in depends) if depends else "- None"
     default_inputs_table = (
-        "| Field | Required | Description |\n"
-        "|-------|----------|-------------|\n"
-        "| See agent spec | — | — |"
+        "| Field | Required | Description |\n" "|-------|----------|-------------|\n" "| See agent spec | — | — |"
     )
     inputs_section = INPUTS.get(task_id, default_inputs_table)
 
@@ -191,5 +189,3 @@ Output file: `generated_projects/{{run_id}}/{task_id}/{output_file}`
 - Execution rules: `core/execution_rules.md`
 - Agent spec path: `agents/{task_meta['folder']}/{task_id}_{slug}_agent.md`
 """
-
-

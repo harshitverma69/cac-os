@@ -56,9 +56,7 @@ def aggregate_results(
         "completed_count": len(completed),
         "execution_log": display_path(log_path),
         "failed_count": len(failed),
-        "outputs": {
-            skill_id: display_path(run_dir / skill_id / "output.json") for skill_id in completed
-        },
+        "outputs": {skill_id: display_path(run_dir / skill_id / "output.json") for skill_id in completed},
         "run_id": plan.run_id,
         "skills_completed": completed,
         "skills_failed": failed,

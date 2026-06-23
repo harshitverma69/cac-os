@@ -844,7 +844,6 @@ INPUTS: dict[str, str] = {
 }
 
 
-
 INPUT_BULLETS: dict[str, list[str]] = {
     "B1": ["repository_path (absolute string)"],
     "B2": ["repository_path", "inventory_report.json (from B1, optional)"],
@@ -853,7 +852,11 @@ INPUT_BULLETS: dict[str, list[str]] = {
     "B5": ["project_name (string)", "output_dir (absolute path)"],
     "B6": ["project_name (string)", "output_dir (absolute path)"],
     "I1": ["repository_path", "inventory_report.json (B1, optional)"],
-    "I2": ["repository_path", "entry_point_id (METHOD:/path | event:name | cron:expression)", "api_map_report.json (B2, optional)"],
+    "I2": [
+        "repository_path",
+        "entry_point_id (METHOD:/path | event:name | cron:expression)",
+        "api_map_report.json (B2, optional)",
+    ],
     "I3": ["repository_path", "change_spec {description, target_module}"],
     "I4": ["output_dir (absolute path)"],
     "I5": ["service_path (absolute path)", "service_port (integer)"],
@@ -871,5 +874,3 @@ INPUT_BULLETS: dict[str, list[str]] = {
     "D5": ["repository_path", "bootstrap_type (devcontainer|nix|makefile_mise)"],
     "D6": ["service_path (absolute path)"],
 }
-
-

@@ -160,7 +160,9 @@ def test_registry_builder_missing_agent(monkeypatch):
     with patch.object(
         srb,
         "load_task_registry",
-        return_value={"tasks": {"Z9": {"folder": "x", "slug": "y", "level": "B", "depends_on": [], "output_file": "o.json"}}},
+        return_value={
+            "tasks": {"Z9": {"folder": "x", "slug": "y", "level": "B", "depends_on": [], "output_file": "o.json"}}
+        },
     ):
         with pytest.raises(FileNotFoundError):
             srb.build_skill_registry(write_skills=False)

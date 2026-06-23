@@ -58,11 +58,7 @@ def validate_skill_coverage(registry: dict, skills_root: Path = SKILLS_ROOT) -> 
 
     total = len([skill_id for skill_id in EXPECTED_SKILL_IDS if skill_id in skills])
     coverage_ok = (
-        total == EXPECTED_SKILL_COUNT
-        and not missing
-        and not duplicates
-        and not missing_files
-        and not missing_contracts
+        total == EXPECTED_SKILL_COUNT and not missing and not duplicates and not missing_files and not missing_contracts
     )
 
     return {
