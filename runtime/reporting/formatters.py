@@ -9,7 +9,7 @@ from typing import Any
 def stringify(value: Any) -> str:
     if value is None:
         return ""
-    if isinstance(value, (list, dict)):
+    if isinstance(value, list | dict):
         return json.dumps(value, ensure_ascii=True)
     return str(value)
 
@@ -35,7 +35,7 @@ def render_value(value: Any, *, depth: int = 0) -> str:
         return "_null_"
     if isinstance(value, bool):
         return str(value).lower()
-    if isinstance(value, (int, float)):
+    if isinstance(value, int | float):
         return str(value)
     if isinstance(value, str):
         if "\n" in value and depth == 0:
